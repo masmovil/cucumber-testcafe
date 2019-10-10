@@ -1,0 +1,10 @@
+{
+  "git.ignoreLimitWarning": true,
+  "cucumberautocomplete.steps": [
+    "test/steps/*.sd.ts",
+    "cucumber-testcafe/steps/*.sd.ts"
+  ],
+  "cucumberautocomplete.syncfeatures": "test/**/*feature",
+  "cucumberautocomplete.strictGherkinCompletion": true,
+  "cucumberautocomplete.gherkinDefinitionPart": "(Given|When|Then)\\("
+}

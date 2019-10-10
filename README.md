@@ -22,6 +22,6 @@ Also provides a set of generic step-definitions implemented with testcafe.
 
 * [Example config by profiles](https://github.com/masmovil/cucumber-testcafe/blob/master/example-project/cucumber.profiles.json)
 
-
 * [List of available step definitions](https://github.com/masmovil/cucumber-testcafe/blob/master/src/lib/steps/base.sd.ts)
 
+* [Example VSCode config](https://github.com/masmovil/cucumber-testcafe/blob/master/example-project/.vscode/settings.json)

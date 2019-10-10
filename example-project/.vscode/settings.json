@@ -2,7 +2,7 @@
   "git.ignoreLimitWarning": true,
   "cucumberautocomplete.steps": [
     "test/steps/*.sd.ts",
-    "cucumber-testcafe/steps/*.sd.ts"
+    "node_modules/cucumber-testcafe/dist/lib/steps/*.sd.js"
   ],
   "cucumberautocomplete.syncfeatures": "test/**/*feature",
   "cucumberautocomplete.strictGherkinCompletion": true,

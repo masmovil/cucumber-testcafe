@@ -1,0 +1,21 @@
+{
+  "name": "example-project",
+  "version": "0.0.1",
+  "description": "example project",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "clean": "npm run clean:test && rm -rf node_modules package-lock.json",
+    "clean:test": "rm -rf test/reports/features test/reports/index.html test/reports/report.json",
+    "test": "cucumber-testcafe",
+    "reinstall": "npm run clean && npm install",
+    "all": "npm run reinstall && npm run test"
+  },
+  "dependencies": {
+    "cucumber-testcafe": "file:.."
+  },
+  "author": "masmovil",
+  "license": "MIT"
+}

@@ -1,0 +1,22 @@
+{
+  "default": {
+    "paths": ["test/**/*.feature"],
+    "requireModule": ["ts-node/register"],
+    "baseURL": "https://yoigo.com",
+    "require": ["test/**/*.ts"],
+    "reports": "test/reports",
+    "browser": "chrome",
+    "tags": "not @ignore",
+    "reportHTML": true
+  },
+  "ci": {
+    "paths": ["test/**/*.feature"],
+    "requireModule": ["ts-node/register"],
+    "baseURL": "https://yoigo.com",
+    "require": ["test/**/*.ts"],
+    "reports": "test/reports",
+    "browser": "chrome:headless",
+    "tags": "not @ignore",
+    "reportHTML": true
+  }
+}

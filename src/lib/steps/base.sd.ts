@@ -3,10 +3,6 @@ import book from '../book'
 
 const querystring = require('querystring')
 
-Given('page {string} is ready', async pageName => {
-  await book.getPage(pageName).isReady()
-})
-
 Given('go to {string} page', async pageName => {
   await book.getPage(pageName).navigate()
 })
@@ -57,23 +53,23 @@ Given('clicks on {string}', async dataHook => {
 })
 
 Given(
-  'field {string} field-name has text {string}',
-  async (fieldName, text) => {
-    await book.base.isFieldWithValue(fieldName, text)
+  'field {string} field-name has value {string}',
+  async (fieldName, value) => {
+    await book.base.isFieldWithValue(fieldName, value)
   }
 )
 
 Given(
-  'complete {string} field-name with text {string}',
-  async (fieldName, text) => {
-    await book.base.setFieldValueByName(fieldName, text)
+  'complete {string} field-name with value {string}',
+  async (fieldName, value) => {
+    await book.base.setFieldValueByName(fieldName, value)
   }
 )
 
 Given(
-  'complete {string} with attribute {string}={string} with text {string}',
-  async (selector, attr, attrValue, text) => {
-    await book.base.setFieldValueBySelector(selector, attr, attrValue, text)
+  'complete {string} with attribute {string}={string} with value {string}',
+  async (selector, attr, attrValue, value) => {
+    await book.base.setFieldValueBySelector(selector, attr, attrValue, value)
   }
 )
 

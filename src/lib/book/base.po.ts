@@ -10,10 +10,6 @@ import { Selector, ClientFunction } from '../testcafe-helpers'
 const querystring = require('querystring')
 
 export default class BasePO {
-  isReady() {
-    return this.select('body')
-  }
-
   navigate(
     params: { path: string; qParams: object } = {
       path: '/',

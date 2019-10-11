@@ -4,10 +4,6 @@ import { testController } from 'cucumber-testcafe/dist/lib/world'
 export default class HomePO extends BasePO {
   static pageName: 'home'
 
-  isReady() {
-    return this.selectByDataHook('link-home-menu-fixed')
-  }
-
   async assertCookies() {
     const cookies = await this.select('div[class*="cookies close"]')
 

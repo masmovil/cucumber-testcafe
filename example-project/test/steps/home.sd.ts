@@ -2,7 +2,7 @@ import { Given, Then, When } from 'cucumber'
 import book from '../book'
 import HomePO from '../book/home.po'
 
-const home: HomePO = book.pages.home as any
+const home: HomePO = book.getPage(HomePO.pageName) as any
 
 Given('accept cookies', async () => {
   await home.assertCookies()

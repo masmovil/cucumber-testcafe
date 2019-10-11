@@ -1,9 +1,9 @@
-import { Given, Then, When } from 'cucumber'
+import { Given } from 'cucumber'
 import book from '../book'
 
 const querystring = require('querystring')
 
-Then('page {string} is ready', async pageName => {
+Given('page {string} is ready', async pageName => {
   await book.getPage(pageName).isReady()
 })
 
@@ -28,60 +28,63 @@ Given(
   }
 )
 
-When('{string} is present', async dataHook => {
+Given('{string} is present', async dataHook => {
   await book.base.isPresentByDataHook(dataHook)
 })
 
-When('{string} is not present', async dataHook => {
+Given('{string} is not present', async dataHook => {
   await book.base.isNotPresentByDataHook(dataHook)
 })
 
-Then(`text {string} is present`, async textToSearch => {
+Given(`text {string} is present`, async textToSearch => {
   await book.base.isPresentText(textToSearch)
 })
 
-Then(`text {string} is present in {string}`, async (textToSearch, context) => {
+Given(`text {string} is present in {string}`, async (textToSearch, context) => {
   await book.base.isPresentText(textToSearch, context)
 })
 
-Then('clicks on {string} text', async text => {
+Given('clicks on {string} text', async text => {
   await book.base.clickByText(text)
 })
 
-Then('clicks on {string} selector', async selector => {
+Given('clicks on {string} selector', async selector => {
   await book.base.clickBySelector(selector)
 })
 
-Then('clicks on {string}', async dataHook => {
+Given('clicks on {string}', async dataHook => {
   await book.base.clickByDataHook(dataHook)
 })
 
-Then('field {string} field-name has text {string}', async (fieldName, text) => {
-  await book.base.isFieldWithValue(fieldName, text)
-})
+Given(
+  'field {string} field-name has text {string}',
+  async (fieldName, text) => {
+    await book.base.isFieldWithValue(fieldName, text)
+  }
+)
 
-Then(
+Given(
   'complete {string} field-name with text {string}',
   async (fieldName, text) => {
     await book.base.setFieldValueByName(fieldName, text)
   }
 )
 
-Then(
+Given(
   'complete {string} with attribute {string}={string} with text {string}',
   async (selector, attr, attrValue, text) => {
     await book.base.setFieldValueBySelector(selector, attr, attrValue, text)
   }
 )
 
-Then('tabulate to next form field', async () => {
+Given('tabulate to next form field', async () => {
   await book.base.pressTab()
 })
 
-Then('wait {int} ms', async time => {
+Given('wait {int} ms', async time => {
   await book.base.waitDeterminateTime(time)
 })
 
-When('debug', async () => {
+Given('debug', async () => {
   await book.base.debug()
 })

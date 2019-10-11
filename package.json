@@ -8,7 +8,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "all": "npm run clean && npm i && npm run build",
+    "all": "npm run clean && npm i && npm i -g",
     "clean": "rm -rf node_modules package-lock.json dist",
     "postinstall": "npm run build",
     "build": "npx tsc -p tsconfig.json",
@@ -34,7 +34,6 @@
     "base64-img": "^1.0.4",
     "cucumber": "^5.1.0",
     "cucumber-junit-convert": "^1.1.0",
-    "lodash": "^4.17.15",
     "multiple-cucumber-html-reporter": "^1.13.1",
     "testcafe": "^1.5.0",
     "ts-node": "^8.4.1",

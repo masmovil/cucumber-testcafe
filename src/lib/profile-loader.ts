@@ -1,4 +1,10 @@
-import { flatten } from 'lodash'
+function flattenDeep(arr1) {
+  return arr1.reduce(
+    (acc, val) =>
+      Array.isArray(val) ? acc.concat(flattenDeep(val)) : acc.concat(val),
+    []
+  )
+}
 
 const defaultProfile = {
   paths: ['test/**/*.feature'],
@@ -39,7 +45,7 @@ function cucumberProfileArgs(profile) {
     `${mergedProfile.tags}`
   ]
 
-  return flatten(args)
+  return flattenDeep(args)
 }
 
 const config = require(process.argv[2] ||

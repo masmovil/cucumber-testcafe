@@ -1,12 +1,13 @@
 /* global window */
 /* eslint-disable class-methods-use-this */
-import { ClientFunction } from 'testcafe'
-import { objectToQueryString } from '../query-params'
 // TODO: remove xpath-to-css selector
 import { xPathToCss } from '../xpath-to-css'
 import { testControllerHolder } from '../test-controller-holder'
 import { testController } from '../world'
-import { Selector } from '../selector'
+import { Selector, ClientFunction } from '../testcafe-helpers'
+// import { objectToQueryString } from '../query-params'
+
+const querystring = require('querystring')
 
 export default class BasePO {
   // TODO: refactor after thor-base navigate changes
@@ -18,16 +19,14 @@ export default class BasePO {
   ) {
     const url = `${testControllerHolder.baseURL}${
       params.path
-    }?${objectToQueryString(params.qParams)}`
+    }?${querystring.stringify(params.qParams)}`
 
     return testController.navigateTo(url)
   }
 
   goBack() {
     // TODO: ClientFunction as factory with testcontroller binded
-    return ClientFunction(() => window.history.back()).with({
-      boundTestRun: testController
-    })()
+    return ClientFunction(() => window.history.back())()
   }
 
   select(selector) {
@@ -54,15 +53,11 @@ export default class BasePO {
   }
 
   scroll(x, y) {
-    return ClientFunction((xnum, ynum) => window.scrollBy(xnum, ynum)).with({
-      boundTestRun: testController
-    })(x, y)
+    return ClientFunction((xnum, ynum) => window.scrollBy(xnum, ynum))(x, y)
   }
 
   getUrl() {
-    return ClientFunction(() => window.location.href).with({
-      boundTestRun: testController
-    })()
+    return ClientFunction(() => window.location.href)() as Promise<string>
   }
 
   async setResolutionSize(val1, val2) {
@@ -107,8 +102,8 @@ export default class BasePO {
     return testController.click(this.selectByDataHook(dataHook))
   }
 
-  clickByTag(tag, index = 0) {
-    return testController.click(this.select(`${tag}`).nth(index))
+  clickBySelector(selector, index = 0) {
+    return testController.click(this.select(selector).nth(index))
   }
 
   clickByText(text) {
@@ -126,6 +121,16 @@ export default class BasePO {
   setFieldValueByName(fieldName, text) {
     return testController.typeText(
       this.select(`input[name*="${fieldName}"]`),
+      text,
+      {
+        replace: true
+      }
+    )
+  }
+
+  setFieldValueBySelector(selector, attributeName, attribute, text) {
+    return testController.typeText(
+      this.select(selector).withAttribute(attributeName, attribute),
       text,
       {
         replace: true

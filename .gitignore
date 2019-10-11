@@ -1,3 +1,4 @@
 node_modules
 dist
 example-project/test/reports/
+example-project/test/runner.js

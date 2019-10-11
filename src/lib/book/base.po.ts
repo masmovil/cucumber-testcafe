@@ -10,7 +10,10 @@ import { Selector, ClientFunction } from '../testcafe-helpers'
 const querystring = require('querystring')
 
 export default class BasePO {
-  // TODO: refactor after thor-base navigate changes
+  isReady() {
+    return this.select('body')
+  }
+
   navigate(
     params: { path: string; qParams: object } = {
       path: '/',
@@ -70,23 +73,19 @@ export default class BasePO {
     return testController.navigateTo(url)
   }
 
-  isPresentText(text, context?) {
+  isPresentText(text, dataHookContext?) {
     const properties = ['a', 'p', 'div', 'li', 'span', 'h1', 'h2', 'h3', 'h4']
-    const propertiesWithContext = properties.map(
-      property => `(//*[@data-hook="${context}"]//${property})`
-    )
 
-    return context
+    return dataHookContext
       ? testController
           .expect(
-            this.selectByXpath(propertiesWithContext.join('|')).withText(text)
-              .exists
+            this.selectByDataHook(dataHookContext)
+              .find(properties.join(','))
+              .withText(text).exists
           )
           .ok()
       : testController
-          .expect(
-            this.selectByXpath(properties.join('|')).withText(text).exists
-          )
+          .expect(this.select(properties.join(',')).withText(text).exists)
           .ok()
   }
 

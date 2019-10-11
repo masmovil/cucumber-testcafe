@@ -3,16 +3,20 @@ import book from '../book'
 
 const querystring = require('querystring')
 
+Then('page {string} is ready', async pageName => {
+  await book.getPage(pageName).isReady()
+})
+
+Given('go to {string} page', async pageName => {
+  await book.getPage(pageName).navigate()
+})
+
 Given('go to {string} url', async path => {
   await book.base.navigate({ path, qParams: {} })
 })
 
 Given('go to {string} url with queryparams {string}', async (path, params) => {
   await book.base.navigate({ path, qParams: querystring.parse(params) })
-})
-
-Given('go to {string} page', async pageName => {
-  await book.getPage(pageName).navigate()
 })
 
 Given(

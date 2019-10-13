@@ -11,6 +11,10 @@ Given('go to {string} url', async path => {
   await book.base.navigate({ path, qParams: {} })
 })
 
+Given('go to {string} full-url', async path => {
+  await book.base.navigate({ baseURL: '', path })
+})
+
 Given('go to {string} url with queryparams {string}', async (path, params) => {
   await book.base.navigate({ path, qParams: querystring.parse(params) })
 })
@@ -32,6 +36,14 @@ Given('{string} is not present', async dataHook => {
   await book.base.isNotPresentByDataHook(dataHook)
 })
 
+Given('selector {string} is present', async selector => {
+  await book.base.isPresentBySelector(selector)
+})
+
+Given('selector {string} is not present', async selector => {
+  await book.base.isNotPresentBySelector(selector)
+})
+
 Given(`text {string} is present`, async textToSearch => {
   await book.base.isPresentText(textToSearch)
 })
@@ -50,6 +62,28 @@ Given('clicks on {string} selector', async selector => {
 
 Given('clicks on {string}', async dataHook => {
   await book.base.clickByDataHook(dataHook)
+})
+
+Given(
+  'clicks on check {string} name with value {string}',
+  async (name, value) => {
+    await book.base.clickByNameValue('checkbox', name, value)
+  }
+)
+
+Given('clicks on check index {number}', async index => {
+  await book.base.clickByNameValue('checkbox', name, index)
+})
+
+Given(
+  'clicks on radio {string} name with value {string}',
+  async (name, value) => {
+    await book.base.clickByNameValue('radio', name, value)
+  }
+)
+
+Given('clicks on radio index {number}', async index => {
+  await book.base.clickByNameValue('radio', name, index)
 })
 
 Given(

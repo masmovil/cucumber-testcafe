@@ -71,7 +71,7 @@ Given(
   }
 )
 
-Given('clicks on check index {number}', async index => {
+Given('clicks on check index {int}', async index => {
   await book.base.clickByNameValue('checkbox', name, index)
 })
 
@@ -82,7 +82,7 @@ Given(
   }
 )
 
-Given('clicks on radio index {number}', async index => {
+Given('clicks on radio index {int}', async index => {
   await book.base.clickByNameValue('radio', name, index)
 })
 

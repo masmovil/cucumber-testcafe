@@ -48,8 +48,7 @@ function cucumberProfileArgs(profile) {
   return flattenDeep(args)
 }
 
-const config = require(process.argv[2] ||
-  `${process.env.CUCUMBER_CWD}/cucumber.profiles.json`)[
+const config = require(`${process.env.CUCUMBER_CWD}/cucumber.profiles.json`)[
   process.env.CUCUMBER_PROFILE || 'default'
 ]
 

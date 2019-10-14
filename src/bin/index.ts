@@ -11,7 +11,15 @@ const program = require('commander')
 const pkg = require('../../package.json')
 
 clear()
-console.log(chalk.red(figlet.textSync('cuffe', { horizontalLayout: 'full' })))
+console.log(
+  chalk.red(figlet.textSync('cucumber', { horizontalLayout: 'full' }))
+)
+console.log(
+  chalk.red(figlet.textSync('         +', { horizontalLayout: 'full' }))
+)
+console.log(
+  chalk.red(figlet.textSync('testcafe', { horizontalLayout: 'full' }))
+)
 console.log(chalk.green(pkg.version))
 
 program.version(pkg.version).description('cucumber-testcafe CLI')

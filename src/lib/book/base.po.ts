@@ -5,20 +5,27 @@ import { xPathToCss } from '../xpath-to-css'
 import { testControllerHolder } from '../test-controller-holder'
 import { testController } from '../world'
 import { Selector, ClientFunction } from '../testcafe-helpers'
-// import { objectToQueryString } from '../query-params'
 
 const querystring = require('querystring')
 
+interface NavigateParams {
+  baseURL?: string
+  path?: string
+  qParams?: {
+    [key: string]: string
+  }
+}
 export default class BasePO {
   navigate(
-    params: { path: string; qParams: object } = {
+    params: NavigateParams = {
+      baseURL: testControllerHolder.baseURL,
       path: '/',
       qParams: {}
     }
   ) {
-    const url = `${testControllerHolder.baseURL}${
-      params.path
-    }?${querystring.stringify(params.qParams)}`
+    const url = `${params.baseURL}${params.path}?${querystring.stringify(
+      params.qParams
+    )}`
 
     return testController.navigateTo(url)
   }
@@ -93,6 +100,14 @@ export default class BasePO {
     return testController.expect(this.selectByDataHook(dataHook).exists).notOk()
   }
 
+  isPresentBySelector(selector) {
+    return testController.expect(this.select(selector).exists).ok()
+  }
+
+  isNotPresentBySelector(selector) {
+    return testController.expect(this.select(selector).exists).notOk()
+  }
+
   clickByDataHook(dataHook) {
     return testController.click(this.selectByDataHook(dataHook))
   }
@@ -104,6 +119,18 @@ export default class BasePO {
   clickByText(text) {
     return testController.click(
       this.select('a, p, li, span, button, em').withText(text)
+    )
+  }
+
+  clickByNameValue(type, name, value) {
+    return testController.click(
+      this.select(`[type=${type}][name=${name}][value="${value}"]`)
+    )
+  }
+
+  clickByNameIndex(type, name, index) {
+    return testController.click(
+      this.select(`[type=${type}][name=${name}]`).nth(index)
     )
   }
 

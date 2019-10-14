@@ -36,7 +36,6 @@
     "clear": "^0.1.0",
     "commander": "^3.0.2",
     "cucumber": "^5.1.0",
-    "cucumber-junit-convert": "^1.1.0",
     "figlet": "^1.2.4",
     "fs-extra": "^8.1.0",
     "multiple-cucumber-html-reporter": "^1.13.1",

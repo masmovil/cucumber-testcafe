@@ -14,13 +14,6 @@ const testControllerHolder = {
   lastTestController: null,
   baseURL: process.env.CUCUMBER_BASEURL,
 
-  testDone() {
-    return (
-      testControllerHolder.lastTestController.testRun
-        .lastDriverStatusResponse === 'test-done-confirmation'
-    )
-  },
-
   capture(t: TestController) {
     testControllerHolder.testController = t
 

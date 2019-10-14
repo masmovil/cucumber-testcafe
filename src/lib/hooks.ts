@@ -2,15 +2,14 @@ import { After, AfterAll, Before, setDefaultTimeout, Status } from 'cucumber'
 import { existsSync, unlinkSync, writeFileSync } from 'fs'
 import { exit } from 'process'
 import { testControllerHolder } from './test-controller-holder'
+import { testController } from './world'
 
 // tslint:disable-next-line
 const testCafe = require('testcafe')
 
-const testController = testControllerHolder.testController
 let isTestCafeError = false
 let attachScreenshotToReport = null
 let cafeRunner = null
-let n = 0
 
 const TIMEOUT = +process.env.CUCUMBER_TIMEOUT || 20000
 const RUNNER_FILE = `${process.env.CUCUMBER_CWD}/test/runner.js`
@@ -24,12 +23,10 @@ function createTestFile(featureName = '', scenarioName = '') {
   )
 }
 
-function runTest(iteration, browser) {
+function runTest(browser) {
   let runner
 
-  testCafe('localhost', 1338 + iteration, 1339 + iteration).then(function(
-    tc: any
-  ) {
+  testCafe('localhost').then(function(tc: any) {
     cafeRunner = tc
     runner = tc.createRunner()
     return runner
@@ -39,8 +36,7 @@ function runTest(iteration, browser) {
       .run({
         skipJsErrors: true,
         selectorTimeout: TIMEOUT - TIMEOUT / 5,
-        assertionTimeout: TIMEOUT / 2,
-        speed: 1
+        assertionTimeout: TIMEOUT / 2
       })
       .catch((error: any) => {
         console.warn('Runner error count was: ', error)
@@ -51,22 +47,20 @@ function runTest(iteration, browser) {
 setDefaultTimeout(TIMEOUT)
 
 Before(async function(scenario) {
+  const scenarioName = scenario.pickle.name
   const featureName = scenario.sourceLocation.uri
     .split('/')
     .slice(-1)[0]
     .split('.')[0]
 
-  const scenarioName = scenario.pickle.name
   createTestFile(featureName, scenarioName)
-  runTest(n, process.env.CUCUMBER_BROWSER || this.parameters.browser)
-  n += 2
-  await this.waitForTestController.then(t => {
-    return t.maximizeWindow()
-  })
+  runTest(process.env.CUCUMBER_BROWSER || this.parameters.browser)
+
+  await this.waitForTestController.then(t => t.maximizeWindow())
 })
 
 After(function() {
-  unlinkSync(RUNNER_FILE)
+  if (existsSync(RUNNER_FILE)) unlinkSync(RUNNER_FILE)
   testControllerHolder.free()
 })
 
@@ -89,7 +83,10 @@ AfterAll(function() {
   }
 
   function checkLastResponse() {
-    if (testControllerHolder.testDone()) {
+    if (
+      testController.testRun.lastDriverStatusResponse ===
+      'test-done-confirmation'
+    ) {
       cafeRunner.close()
       clearInterval(intervalId)
       generateMultipleHtmlReport()
@@ -97,7 +94,6 @@ AfterAll(function() {
     }
   }
 
-  if (existsSync(RUNNER_FILE)) unlinkSync(RUNNER_FILE)
   waitForTestCafe()
 })
 
@@ -148,9 +144,9 @@ const ifErrorTakeScreenshot = async resolvedTestController => {
   ) {
     if (canGenerateReport()) {
       resolvedTestController.executionChain._state = 'fulfilled'
-      return resolvedTestController.takeScreenshot().then(path => {
-        return getAttachScreenshotToReport(path)
-      })
+      return resolvedTestController
+        .takeScreenshot()
+        .then(path => getAttachScreenshotToReport(path))
     } else {
       return resolvedTestController.takeScreenshot()
     }

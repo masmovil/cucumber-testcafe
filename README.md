@@ -9,6 +9,14 @@ Also provides a set of generic step-definitions implemented with testcafe.
 * [nodejs](https://nodejs.org/)
 * [cucumber vscode autocomplete](https://marketplace.visualstudio.com/items?itemName=alexkrechik.cucumberautocomplete)
 
+## Super fast quick start
+
+```
+npm i -g cucumber-testcafe    # install
+cucumber-testcafe init test   # bootstrap
+cucumber-testcafe run         # run
+```
+
 ## Quick start
 
 * Install with npm

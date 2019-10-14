@@ -26,7 +26,9 @@ var path = require('path');
 var program = require('commander');
 var pkg = require('../../package.json');
 clear();
-console.log(chalk.red(figlet.textSync('cuffe', { horizontalLayout: 'full' })));
+console.log(chalk.red(figlet.textSync('cucumber', { horizontalLayout: 'full' })));
+console.log(chalk.red(figlet.textSync('         +', { horizontalLayout: 'full' })));
+console.log(chalk.red(figlet.textSync('testcafe', { horizontalLayout: 'full' })));
 console.log(chalk.green(pkg.version));
 program.version(pkg.version).description('cucumber-testcafe CLI');
 var EXAMPLE_PROJECT_DIR = __dirname + "/../../example-project";
@@ -43,18 +45,25 @@ program
     });
     fs.copySync(EXAMPLE_PROJECT_DIR + '/cucumber.profiles.json', dest + '/cucumber.profiles.json');
     // copy vscode settings
+    var exampleVSCodeSettings = JSON.parse(fs.readFileSync(EXAMPLE_PROJECT_DIR + '/.vscode/settings.json', 'utf8'));
+    exampleVSCodeSettings['cucumberautocomplete.steps'] = [
+        dest + '/steps/*.sd.ts',
+        'node_modules/cucumber-testcafe/dist/lib/steps/*.sd.js'
+    ];
+    exampleVSCodeSettings['cucumberautocomplete.syncfeatures'] =
+        dest + '/steps/*.feature';
     if (fs.existsSync(dest + '/../.vscode/settings.json')) {
         var destVSCodeSettings = JSON.parse(fs.readFileSync(dest + '/../.vscode/settings.json', 'utf8'));
-        var exampleVSCodeSettings = JSON.parse(fs.readFileSync(EXAMPLE_PROJECT_DIR + '/.vscode/settings.json', 'utf8'));
         fs.writeFileSync(dest + '/../.vscode/settings.json', JSON.stringify(__assign(__assign({}, destVSCodeSettings), exampleVSCodeSettings), null, 2));
     }
     else {
         fs.copySync(EXAMPLE_PROJECT_DIR + '/.vscode', dest + '/../.vscode');
+        fs.writeFileSync(dest + '/../.vscode/settings.json', JSON.stringify(exampleVSCodeSettings, null, 2));
     }
-    // add cuffe command to packag.json scripts
+    // add cucumber-testcafe command to packag.json scripts
     if (fs.existsSync(dest + '/../package.json')) {
         var destPkg = JSON.parse(fs.readFileSync(dest + '/../package.json', 'utf8'));
-        destPkg.scripts.cuffe = 'cucumber-testcafe run';
+        destPkg.scripts['cucumber-testcafe'] = 'cucumber-testcafe run';
         fs.writeFileSync(dest + '/../package.json', JSON.stringify(destPkg, null, 2));
     }
     else {

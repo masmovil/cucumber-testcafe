@@ -75,12 +75,12 @@ program
       )
     }
 
-    // add cuffe command to packag.json scripts
+    // add cucumber-testcafe command to packag.json scripts
     if (fs.existsSync(dest + '/../package.json')) {
       const destPkg = JSON.parse(
         fs.readFileSync(dest + '/../package.json', 'utf8')
       )
-      destPkg.scripts.cuffe = 'cucumber-testcafe run'
+      destPkg.scripts['cucumber-testcafe'] = 'cucumber-testcafe run'
 
       fs.writeFileSync(
         dest + '/../package.json',

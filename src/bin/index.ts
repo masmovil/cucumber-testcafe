@@ -38,12 +38,18 @@ program
     )
 
     // copy vscode settings
+    const exampleVSCodeSettings = JSON.parse(
+      fs.readFileSync(EXAMPLE_PROJECT_DIR + '/.vscode/settings.json', 'utf8')
+    )
+    exampleVSCodeSettings['cucumberautocomplete.steps'] = [
+      dest + '/steps/*.sd.ts',
+      'node_modules/cucumber-testcafe/dist/lib/steps/*.sd.js'
+    ]
+    exampleVSCodeSettings['cucumberautocomplete.syncfeatures'] =
+      dest + '/steps/*.feature'
     if (fs.existsSync(dest + '/../.vscode/settings.json')) {
       const destVSCodeSettings = JSON.parse(
         fs.readFileSync(dest + '/../.vscode/settings.json', 'utf8')
-      )
-      const exampleVSCodeSettings = JSON.parse(
-        fs.readFileSync(EXAMPLE_PROJECT_DIR + '/.vscode/settings.json', 'utf8')
       )
       fs.writeFileSync(
         dest + '/../.vscode/settings.json',
@@ -55,6 +61,10 @@ program
       )
     } else {
       fs.copySync(EXAMPLE_PROJECT_DIR + '/.vscode', dest + '/../.vscode')
+      fs.writeFileSync(
+        dest + '/../.vscode/settings.json',
+        JSON.stringify(exampleVSCodeSettings, null, 2)
+      )
     }
 
     // add cuffe command to packag.json scripts

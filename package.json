@@ -12,6 +12,7 @@
     "clean": "rm -rf node_modules package-lock.json dist",
     "postinstall": "npm run build",
     "build": "npx tsc -p tsconfig.json",
+    "test": "cd example-project && npm run all && cd ..",
     "lint": "npx prettier src/**/*.ts --write && npx tslint -c tslint.json 'src/**/*.ts'"
   },
   "repository": {

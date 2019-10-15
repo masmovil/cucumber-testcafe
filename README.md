@@ -12,9 +12,10 @@ Also provides a set of generic step-definitions implemented with testcafe.
 ## Super fast quick start
 
 ```
-npm i -g cucumber-testcafe    # install
-cucumber-testcafe init test   # bootstrap
-cucumber-testcafe run         # run
+cd my-project && npm init
+npm i cucumber-testcafe --save    # install
+npx cucumber-testcafe init test   # bootstrap
+npx cucumber-testcafe run         # run
 ```
 
 ## Quick start

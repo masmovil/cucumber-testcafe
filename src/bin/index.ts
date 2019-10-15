@@ -30,7 +30,7 @@ program
   .command('init [folder]')
   .description('Creates basic test scaffolding')
   .action(function(folder) {
-    const dest = folder || 'test'
+    const dest = process.cwd() + '/' + (folder || 'test')
 
     console.log('Generating test folder in', dest)
 
@@ -42,7 +42,7 @@ program
 
     fs.copySync(
       EXAMPLE_PROJECT_DIR + '/cucumber.profiles.json',
-      dest + '/cucumber.profiles.json'
+      dest + '/../cucumber.profiles.json'
     )
 
     // copy vscode settings

@@ -36,14 +36,14 @@ program
     .command('init [folder]')
     .description('Creates basic test scaffolding')
     .action(function (folder) {
-    var dest = folder || 'test';
+    var dest = process.cwd() + '/' + (folder || 'test');
     console.log('Generating test folder in', dest);
     fs.copySync(EXAMPLE_PROJECT_DIR + '/test', dest, {
         filter: function (src) {
             return !src.includes('node_modules');
         }
     });
-    fs.copySync(EXAMPLE_PROJECT_DIR + '/cucumber.profiles.json', dest + '/cucumber.profiles.json');
+    fs.copySync(EXAMPLE_PROJECT_DIR + '/cucumber.profiles.json', dest + '/../cucumber.profiles.json');
     // copy vscode settings
     var exampleVSCodeSettings = JSON.parse(fs.readFileSync(EXAMPLE_PROJECT_DIR + '/.vscode/settings.json', 'utf8'));
     exampleVSCodeSettings['cucumberautocomplete.steps'] = [

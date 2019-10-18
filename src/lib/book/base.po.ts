@@ -23,9 +23,11 @@ export default class BasePO {
       qParams: {}
     }
   ) {
-    const url = `${params.baseURL}${params.path}?${querystring.stringify(
-      params.qParams
-    )}`
+    const url = `${
+      params.baseURL === undefined
+        ? testControllerHolder.baseURL
+        : params.baseURL
+    }${params.path}?${querystring.stringify(params.qParams)}`
 
     return testController.navigateTo(url)
   }

@@ -70,7 +70,7 @@ After(async function(testCase) {
   if (testCase.result.status === Status.FAILED) {
     isTestCafeError = true
     attachScreenshotToReport = world.attachScreenshotToReport
-    await addErrorToController()
+    await addErrorToController(testCase.result)
     await ifErrorTakeScreenshot(testController)
   }
 })
@@ -90,7 +90,7 @@ AfterAll(function() {
       cafeRunner.close()
       clearInterval(intervalId)
       generateMultipleHtmlReport()
-      exit()
+      exit(testController.testRun.errs.length)
     }
   }
 
@@ -123,18 +123,15 @@ function generateMultipleHtmlReport() {
   }
 }
 
-const addErrorToController = async () => {
-  return testController.executionChain.catch(result => {
-    const errAdapter = new testCafe.embeddingUtils.TestRunErrorFormattableAdapter(
-      result,
-      {
-        testRunPhase: testController.testRun.phase,
-        userAgent:
-          testController.testRun.browserConnection.browserInfo.userAgent
-      }
-    )
-    return testController.testRun.errs.push(errAdapter)
-  })
+const addErrorToController = async error => {
+  const errAdapter = new testCafe.embeddingUtils.TestRunErrorFormattableAdapter(
+    error,
+    {
+      testRunPhase: testController.testRun.phase,
+      userAgent: testController.testRun.browserConnection.browserInfo.userAgent
+    }
+  )
+  return testController.testRun.errs.push(errAdapter)
 }
 
 const ifErrorTakeScreenshot = async resolvedTestController => {

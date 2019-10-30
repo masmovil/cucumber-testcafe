@@ -6,3 +6,4 @@ Feature: Fibra + Móvil
     And accept cookies
     When click "fibra+movil" in horizontal menu
     Then tariffs are displayed
+

@@ -36,22 +36,22 @@
     "chalk": "^2.4.2",
     "clear": "^0.1.0",
     "commander": "^3.0.2",
-    "cucumber": "^5.1.0",
+    "cucumber": "^6.0.3",
     "figlet": "^1.2.4",
     "fs-extra": "^8.1.0",
     "multiple-cucumber-html-reporter": "^1.13.1",
-    "testcafe": "^1.5.0",
+    "testcafe": "^1.6.0",
     "ts-node": "^8.4.1",
     "tslib": "^1.10.0",
     "typescript": "^3.6.4"
   },
   "devDependencies": {
-    "@types/node": "^12.7.12",
+    "@types/node": "^12.12.0",
     "prettier": "1.18.2",
-    "tslint": "^5.14.0",
+    "tslint": "^5.20.0",
     "tslint-config-prettier": "~1.18.0",
     "tslint-config-standard": "~8.0.1",
-    "tslint-defocus": "^2.0.5",
+    "tslint-defocus": "^2.0.6",
     "tslint-plugin-prettier": "^2.0.1"
   }
 }

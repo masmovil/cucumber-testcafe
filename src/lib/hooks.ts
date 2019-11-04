@@ -90,16 +90,13 @@ AfterAll(function() {
       cafeRunner.close()
       clearInterval(intervalId)
       generateMultipleHtmlReport()
-      exit(testController.testRun.errs.length)
+      exit(+isTestCafeError)
     }
   }
 
   waitForTestCafe()
 })
 
-const getIsTestCafeError = function() {
-  return isTestCafeError
-}
 
 const getAttachScreenshotToReport = path => {
   return attachScreenshotToReport(path)
@@ -136,7 +133,7 @@ const addErrorToController = async error => {
 
 const ifErrorTakeScreenshot = async resolvedTestController => {
   if (
-    getIsTestCafeError() &&
+    isTestCafeError &&
     testController.testRun.opts.takeScreenshotsOnFails === true
   ) {
     if (canGenerateReport()) {

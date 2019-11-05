@@ -35,8 +35,8 @@ function runTest(browser) {
       .browsers(browser || 'chrome')
       .run({
         skipJsErrors: true,
-        selectorTimeout: TIMEOUT / 2,
-        assertionTimeout: TIMEOUT / 2
+        selectorTimeout: TIMEOUT,
+        assertionTimeout: TIMEOUT
       })
       .catch((error: any) => {
         console.warn('Runner error count was: ', error)

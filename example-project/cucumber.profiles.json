@@ -7,7 +7,8 @@
     "reports": "test/reports",
     "browser": "chrome",
     "tags": "not @ignore",
-    "reportHTML": true
+    "reportHTML": true,
+    "timeout": 10000
   },
   "ci": {
     "paths": ["test/**/*.feature"],

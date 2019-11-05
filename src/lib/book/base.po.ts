@@ -162,6 +162,26 @@ export default class BasePO {
     )
   }
 
+  isDisabledHook(hook) {
+    return testController
+      .expect(
+        () =>
+          !this.selectByDataHook(hook).exists ||
+          this.selectByDataHook(hook).hasAttribute('disabled')
+      )
+      .ok()
+  }
+
+  isEnabledHook(hook) {
+    return testController
+      .expect(
+        () =>
+          this.selectByDataHook(hook).exists &&
+          !this.selectByDataHook(hook).hasAttribute('disabled')
+      )
+      .ok()
+  }
+
   pressTab() {
     return testController.pressKey('tab')
   }

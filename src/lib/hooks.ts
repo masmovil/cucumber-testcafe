@@ -97,7 +97,6 @@ AfterAll(function() {
   waitForTestCafe()
 })
 
-
 const getAttachScreenshotToReport = path => {
   return attachScreenshotToReport(path)
 }

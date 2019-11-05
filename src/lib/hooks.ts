@@ -35,7 +35,7 @@ function runTest(browser) {
       .browsers(browser || 'chrome')
       .run({
         skipJsErrors: true,
-        selectorTimeout: TIMEOUT - TIMEOUT / 5,
+        selectorTimeout: TIMEOUT / 2,
         assertionTimeout: TIMEOUT / 2
       })
       .catch((error: any) => {

@@ -15,7 +15,8 @@ const defaultProfile = {
   reports: 'test/reports',
   reportHTML: false,
   baseURL: 'http://localhost:4200',
-  timeout: 20000
+  timeout: 20000,
+  parallel: 1
 }
 
 function cucumberProfileArgs(profile) {
@@ -42,7 +43,9 @@ function cucumberProfileArgs(profile) {
 
     `json:${mergedProfile.reports}/report.json`,
     `--tags`,
-    `${mergedProfile.tags}`
+    `${mergedProfile.tags}`,
+    `--parallel`,
+    `${mergedProfile.parallel}`
   ]
 
   return flattenDeep(args)

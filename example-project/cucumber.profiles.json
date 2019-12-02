@@ -18,6 +18,7 @@
     "reports": "test/reports",
     "browser": "chrome:headless",
     "tags": "not @ignore",
-    "reportHTML": true
+    "reportHTML": true,
+    "parallel": 2
   }
 }

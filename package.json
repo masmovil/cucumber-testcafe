@@ -1,6 +1,6 @@
 {
   "name": "cucumber-testcafe",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "cucumber with testcafe integration",
   "bin": {
     "cucumber-testcafe": "dist/bin/index.js"

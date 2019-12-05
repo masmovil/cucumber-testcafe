@@ -69,8 +69,7 @@ export default class BasePO {
   }
 
   async setResolutionSize(val1, val2) {
-    await testController.resizeWindow(val1, val2)
-    return testController.wait(500)
+    return testController.resizeWindow(val1, val2)
   }
 
   async refreshPage() {
@@ -174,7 +173,7 @@ export default class BasePO {
     return testController.pressKey('tab')
   }
 
-  waitDeterminateTime(time = 500) {
+  wait(time = 500) {
     return testController.wait(time)
   }
 

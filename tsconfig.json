@@ -32,7 +32,7 @@
     "src/**/*"
   ],
   "exclude": [
-    "lib",
+    "dist",
     "node_modules",
     "example-project"
   ]

@@ -8,7 +8,8 @@
     "browser": "chrome",
     "tags": "not @ignore",
     "reportHTML": true,
-    "timeout": 10000
+    "timeout": 30000,
+    "debug": true
   },
   "ci": {
     "paths": ["test/**/*.feature"],

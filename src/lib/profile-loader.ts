@@ -16,7 +16,8 @@ const defaultProfile = {
   reportHTML: false,
   baseURL: 'http://localhost:4200',
   timeout: 20000,
-  parallel: 1
+  parallel: 1,
+  debug: false
 }
 
 function cucumberProfileArgs(profile) {
@@ -31,6 +32,7 @@ function cucumberProfileArgs(profile) {
   process.env.CUCUMBER_HTML = mergedProfile.reportHTML
   process.env.CUCUMBER_TIMEOUT = mergedProfile.timeout
   process.env.CUCUMBER_BASEURL = mergedProfile.baseURL
+  process.env.CUCUMBER_DEBUG = mergedProfile.debug
 
   const args = [
     ...mergedProfile.paths,
@@ -39,9 +41,7 @@ function cucumberProfileArgs(profile) {
       requiredModule
     ]),
     ...mergedProfile.require.map(required => ['--require', required]),
-    '--format',
 
-    `json:${mergedProfile.reports}/report.json`,
     `--tags`,
     `${mergedProfile.tags}`,
     `--parallel`,

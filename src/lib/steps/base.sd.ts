@@ -112,7 +112,7 @@ Given('tabulate to next form field', async () => {
 })
 
 Given('wait {int} ms', async time => {
-  await book.base.waitDeterminateTime(time)
+  await book.base.wait(time)
 })
 
 Given('debug', async () => {

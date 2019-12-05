@@ -17,7 +17,8 @@ const defaultProfile = {
   baseURL: 'http://localhost:4200',
   timeout: 20000,
   parallel: 1,
-  debug: false
+  debug: false,
+  retry: 0
 }
 
 function cucumberProfileArgs(profile) {
@@ -45,7 +46,9 @@ function cucumberProfileArgs(profile) {
     `--tags`,
     `${mergedProfile.tags}`,
     `--parallel`,
-    `${mergedProfile.parallel}`
+    `${mergedProfile.parallel}`,
+    `--retry`,
+    `${mergedProfile.retry}`
   ]
 
   return flattenDeep(args)

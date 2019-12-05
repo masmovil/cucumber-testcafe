@@ -13,7 +13,7 @@ export default class HomePO extends BasePO {
   }
 
   tariffList() {
-    return this.select('.desktop [data-hook="tariffs-card-details"]')
+    return this.select('.tariff-cards__wrapper')
   }
 
   async horizontalMenu(menuOption) {

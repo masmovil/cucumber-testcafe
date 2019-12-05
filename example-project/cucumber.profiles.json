@@ -20,6 +20,7 @@
     "browser": "chrome:headless",
     "tags": "not @ignore",
     "reportHTML": true,
-    "parallel": 2
+    "parallel": 2,
+    "retry": 1
   }
 }

@@ -31,12 +31,23 @@ function runTest(browser) {
     runner = tc.createRunner()
     return runner
       .src(RUNNER_FILE)
-      .screenshots(`${process.env.CUCUMBER_REPORTS}/screenshots/`, true)
+      .screenshots({
+        path: `${process.env.CUCUMBER_REPORTS}/screenshots/`,
+        takeOnFails: true
+      })
       .browsers(browser || 'chrome')
+      .reporter([
+        'spec',
+        {
+          name: 'json',
+          output: `${process.env.CUCUMBER_REPORTS}/report.json`
+        }
+      ])
       .run({
         skipJsErrors: true,
         selectorTimeout: TIMEOUT,
-        assertionTimeout: TIMEOUT
+        assertionTimeout: TIMEOUT,
+        debugOnFail: !!process.env.CUCUMBER_DEBUG
       })
       .catch((error: any) => {
         console.warn('Runner error count was: ', error)

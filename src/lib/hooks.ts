@@ -46,8 +46,8 @@ function runTest(browser) {
       ])
       .run({
         skipJsErrors: true,
-        selectorTimeout: TIMEOUT,
-        assertionTimeout: 10000,
+        selectorTimeout: TIMEOUT / 5,
+        assertionTimeout: TIMEOUT / 10,
         debugOnFail: !!process.env.CUCUMBER_DEBUG
       })
       .catch((error: any) => {

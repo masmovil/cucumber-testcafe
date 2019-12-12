@@ -13,6 +13,7 @@ let cafeRunner = null
 
 const TIMEOUT = +process.env.CUCUMBER_TIMEOUT || 20000
 const RUNNER_FILE = `${process.env.CUCUMBER_CWD}/test/runner.js`
+const delay = ms => new Promise(res => setTimeout(res, ms))
 
 function createTestFile(featureName = '', scenarioName = '') {
   writeFileSync(
@@ -46,7 +47,7 @@ function runTest(browser) {
       .run({
         skipJsErrors: true,
         selectorTimeout: TIMEOUT,
-        assertionTimeout: TIMEOUT,
+        assertionTimeout: 10000,
         debugOnFail: !!process.env.CUCUMBER_DEBUG
       })
       .catch((error: any) => {
@@ -70,23 +71,23 @@ Before(async function(scenario) {
   await this.waitForTestController.then(t => t.maximizeWindow())
 })
 
-After(function() {
-  if (existsSync(RUNNER_FILE)) unlinkSync(RUNNER_FILE)
-  testControllerHolder.free()
-})
-
 After(async function(testCase) {
   const world = this
 
   if (testCase.result.status === Status.FAILED) {
-    isTestCafeError = true
     attachScreenshotToReport = world.attachScreenshotToReport
     await addErrorToController(testCase.result)
     await ifErrorTakeScreenshot(testController)
   }
+
+  testControllerHolder.free()
+  await delay(500)
+  cafeRunner.close()
 })
 
 AfterAll(function() {
+  if (existsSync(RUNNER_FILE)) unlinkSync(RUNNER_FILE)
+
   let intervalId = null
 
   function waitForTestCafe() {
@@ -98,7 +99,6 @@ AfterAll(function() {
       testController.testRun.lastDriverStatusResponse ===
       'test-done-confirmation'
     ) {
-      cafeRunner.close()
       clearInterval(intervalId)
       generateMultipleHtmlReport()
       exit(+isTestCafeError)
@@ -143,7 +143,6 @@ const addErrorToController = async error => {
 
 const ifErrorTakeScreenshot = async resolvedTestController => {
   if (
-    isTestCafeError &&
     testController.testRun.opts.takeScreenshotsOnFails === true
   ) {
     if (canGenerateReport()) {

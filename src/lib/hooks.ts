@@ -27,7 +27,7 @@ function createTestFile(featureName = '', scenarioName = '') {
 function runTest(browser) {
   let runner
 
-  testCafe('localhost').then(function(tc: any) {
+  return testCafe('localhost').then(function(tc: any) {
     cafeRunner = tc
     runner = tc.createRunner()
     return runner
@@ -52,6 +52,7 @@ function runTest(browser) {
       })
       .catch((error: any) => {
         console.warn('Runner error count was: ', error)
+        throw error
       })
   })
 }

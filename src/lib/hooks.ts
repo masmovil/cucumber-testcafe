@@ -7,13 +7,11 @@ import { testController } from './world'
 // tslint:disable-next-line
 const testCafe = require('testcafe')
 
-let isTestCafeError = false
 let attachScreenshotToReport = null
 let cafeRunner = null
 
 const TIMEOUT = +process.env.CUCUMBER_TIMEOUT || 20000
 const RUNNER_FILE = `${process.env.CUCUMBER_CWD}/test/runner.js`
-const delay = ms => new Promise(res => setTimeout(res, ms))
 
 function createTestFile(featureName = '', scenarioName = '') {
   writeFileSync(
@@ -30,6 +28,7 @@ function runTest(browser) {
   return testCafe('localhost').then(function(tc: any) {
     cafeRunner = tc
     runner = tc.createRunner()
+
     return runner
       .src(RUNNER_FILE)
       .screenshots({
@@ -52,7 +51,6 @@ function runTest(browser) {
       })
       .catch((error: any) => {
         console.warn('Runner error count was: ', error)
-        throw error
       })
   })
 }
@@ -60,16 +58,17 @@ function runTest(browser) {
 setDefaultTimeout(TIMEOUT)
 
 Before(async function(scenario) {
-  const scenarioName = scenario.pickle.name
   const featureName = scenario.sourceLocation.uri
-    .split('/')
-    .slice(-1)[0]
-    .split('.')[0]
+  .split('/')
+  .slice(-1)[0]
+  .split('.')[0]
+
+  const scenarioName = scenario.pickle.name
 
   createTestFile(featureName, scenarioName)
   runTest(process.env.CUCUMBER_BROWSER || this.parameters.browser)
 
-  await this.waitForTestController.then(t => t.maximizeWindow())
+  return this.waitForTestController.then(t => t.maximizeWindow())
 })
 
 After(async function(testCase) {
@@ -77,18 +76,17 @@ After(async function(testCase) {
 
   if (testCase.result.status === Status.FAILED) {
     attachScreenshotToReport = world.attachScreenshotToReport
-    await addErrorToController(testCase.result)
+    await addErrorToController()
     await ifErrorTakeScreenshot(testController)
   }
 
-  testControllerHolder.free()
-  await delay(500)
-  cafeRunner.close()
+  if (existsSync(RUNNER_FILE)) unlinkSync(RUNNER_FILE)
+  await testControllerHolder.free()
+  await testController.wait(500)
+  await cafeRunner.close()
 })
 
 AfterAll(function() {
-  if (existsSync(RUNNER_FILE)) unlinkSync(RUNNER_FILE)
-
   let intervalId = null
 
   function waitForTestCafe() {
@@ -100,10 +98,10 @@ AfterAll(function() {
       testController.testRun.lastDriverStatusResponse ===
       'test-done-confirmation'
     ) {
-      clearInterval(intervalId)
       generateMultipleHtmlReport()
-      exit(+isTestCafeError)
     }
+    clearInterval(intervalId)
+    exit()
   }
 
   waitForTestCafe()
@@ -131,26 +129,27 @@ function generateMultipleHtmlReport() {
   }
 }
 
-const addErrorToController = async error => {
-  const errAdapter = new testCafe.embeddingUtils.TestRunErrorFormattableAdapter(
-    error,
-    {
-      testRunPhase: testController.testRun.phase,
-      userAgent: testController.testRun.browserConnection.browserInfo.userAgent
-    }
-  )
-  return testController.testRun.errs.push(errAdapter)
+const addErrorToController = async() => {
+  return testController.executionChain.catch(result => {
+    const errAdapter = new testCafe.embeddingUtils.TestRunErrorFormattableAdapter(
+      result,
+      {
+        testRunPhase: testController.testRun.phase,
+        userAgent: testController.testRun.browserConnection.browserInfo.userAgent
+      }
+    )
+    return testController.testRun.errs.push(errAdapter)
+  })
 }
 
 const ifErrorTakeScreenshot = async resolvedTestController => {
-  if (
-    testController.testRun.opts.takeScreenshotsOnFails === true
-  ) {
+  console.log(resolvedTestController)
+  if (testController.testRun.opts.takeScreenshotsOnFails === true) {
     if (canGenerateReport()) {
       resolvedTestController.executionChain._state = 'fulfilled'
-      return resolvedTestController
-        .takeScreenshot()
-        .then(path => getAttachScreenshotToReport(path))
+      return resolvedTestController.takeScreenshot().then(path => {
+        return getAttachScreenshotToReport(path)
+      })
     } else {
       return resolvedTestController.takeScreenshot()
     }

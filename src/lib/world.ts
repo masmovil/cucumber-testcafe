@@ -12,7 +12,7 @@ let testController: TestControllerWithTestRun = null
 export function CustomWorld({ attach, parameters }) {
   this.waitForTestController = testControllerHolder
     .get()
-    .then((tc: TestControllerWithTestRun) => {
+    .then((tc: TestController) => {
       testController = tc
       return tc
     })

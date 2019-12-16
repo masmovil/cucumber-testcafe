@@ -49,9 +49,7 @@ function runTest(browser) {
         assertionTimeout: TIMEOUT / 10,
         debugOnFail: !!process.env.CUCUMBER_DEBUG
       })
-      .catch((error: any) => {
-        console.warn('Runner error count was: ', error)
-      })
+      
   })
 }
 
@@ -101,7 +99,7 @@ AfterAll(function() {
       generateMultipleHtmlReport()
     }
     clearInterval(intervalId)
-    exit()
+    
   }
 
   waitForTestCafe()

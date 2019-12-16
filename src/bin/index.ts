@@ -107,7 +107,12 @@ program
       stdout: process.stdout
     })
 
-    cli.run().then(success => +success)
+    return cli.run().then(response => {
+      if (!response.success) {
+        process.exit(1)
+      }
+      return response
+    })
   })
 
 program.parse(process.argv)

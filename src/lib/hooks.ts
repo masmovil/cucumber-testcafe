@@ -1,6 +1,5 @@
 import { After, AfterAll, Before, setDefaultTimeout, Status } from 'cucumber'
 import { existsSync, unlinkSync, writeFileSync } from 'fs'
-import { exit } from 'process'
 import { testControllerHolder } from './test-controller-holder'
 import { testController } from './world'
 
@@ -36,20 +35,12 @@ function runTest(browser) {
         takeOnFails: true
       })
       .browsers(browser || 'chrome')
-      .reporter([
-        'spec',
-        {
-          name: 'json',
-          output: `${process.env.CUCUMBER_REPORTS}/report.json`
-        }
-      ])
       .run({
         skipJsErrors: true,
         selectorTimeout: TIMEOUT / 5,
         assertionTimeout: TIMEOUT / 10,
         debugOnFail: !!process.env.CUCUMBER_DEBUG
       })
-      
   })
 }
 
@@ -57,9 +48,9 @@ setDefaultTimeout(TIMEOUT)
 
 Before(async function(scenario) {
   const featureName = scenario.sourceLocation.uri
-  .split('/')
-  .slice(-1)[0]
-  .split('.')[0]
+    .split('/')
+    .slice(-1)[0]
+    .split('.')[0]
 
   const scenarioName = scenario.pickle.name
 
@@ -71,7 +62,6 @@ Before(async function(scenario) {
 
 After(async function(testCase) {
   const world = this
-
   if (testCase.result.status === Status.FAILED) {
     attachScreenshotToReport = world.attachScreenshotToReport
     await addErrorToController()
@@ -80,15 +70,13 @@ After(async function(testCase) {
 
   if (existsSync(RUNNER_FILE)) unlinkSync(RUNNER_FILE)
   await testControllerHolder.free()
-  await testController.wait(500)
   await cafeRunner.close()
 })
 
 AfterAll(function() {
   let intervalId = null
-
   function waitForTestCafe() {
-    intervalId = setInterval(checkLastResponse, 500)
+    intervalId = setInterval(checkLastResponse, 1000)
   }
 
   function checkLastResponse() {
@@ -96,10 +84,9 @@ AfterAll(function() {
       testController.testRun.lastDriverStatusResponse ===
       'test-done-confirmation'
     ) {
+      clearInterval(intervalId)
       generateMultipleHtmlReport()
     }
-    clearInterval(intervalId)
-    
   }
 
   waitForTestCafe()
@@ -127,13 +114,14 @@ function generateMultipleHtmlReport() {
   }
 }
 
-const addErrorToController = async() => {
+const addErrorToController = async () => {
   return testController.executionChain.catch(result => {
     const errAdapter = new testCafe.embeddingUtils.TestRunErrorFormattableAdapter(
       result,
       {
         testRunPhase: testController.testRun.phase,
-        userAgent: testController.testRun.browserConnection.browserInfo.userAgent
+        userAgent:
+          testController.testRun.browserConnection.browserInfo.userAgent
       }
     )
     return testController.testRun.errs.push(errAdapter)

@@ -45,6 +45,9 @@ function cucumberProfileArgs(profile) {
 
     `--tags`,
     `${mergedProfile.tags}`,
+    '--format',
+
+    `json:${mergedProfile.reports}/report.json`,
     `--parallel`,
     `${mergedProfile.parallel}`,
     `--retry`,

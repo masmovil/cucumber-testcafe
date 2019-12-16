@@ -143,8 +143,7 @@ const addErrorToController = async() => {
 }
 
 const ifErrorTakeScreenshot = async resolvedTestController => {
-  console.log(resolvedTestController)
-  if (testController.testRun.opts.takeScreenshotsOnFails === true) {
+  if (testController.testRun.opts.screenshots.takeOnFails) {
     if (canGenerateReport()) {
       resolvedTestController.executionChain._state = 'fulfilled'
       return resolvedTestController.takeScreenshot().then(path => {

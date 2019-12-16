@@ -82,7 +82,12 @@ program
         cwd: process.env.CUCUMBER_CWD,
         stdout: process.stdout
     });
-    cli.run().then(function (success) { return +success; });
+    return cli.run().then(function (response) {
+        if (!response.success) {
+            process.exit(1);
+        }
+        return response;
+    });
 });
 program.parse(process.argv);
 //# sourceMappingURL=index.js.map

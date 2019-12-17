@@ -64,50 +64,40 @@ After(async function(testCase) {
   const world = this
   if (testCase.result.status === Status.FAILED) {
     attachScreenshotToReport = world.attachScreenshotToReport
-    await addErrorToController()
+    await addErrorToController(testController)
     await ifErrorTakeScreenshot(testController)
   }
 
   if (existsSync(RUNNER_FILE)) unlinkSync(RUNNER_FILE)
   await testControllerHolder.free()
-  await cafeRunner.close()
+  return cafeRunner.close()
 })
 
 const getAttachScreenshotToReport = path => {
   return attachScreenshotToReport(path)
 }
 
-const canGenerateReport = (): boolean => {
-  return (
-    process.argv.includes('--format') ||
-    process.argv.includes('-f') ||
-    process.argv.includes('--format-options')
-  )
-}
-
-const addErrorToController = async () => {
-  return testController.executionChain.catch(result => {
+const addErrorToController = async resolvedTestController => {
+  return resolvedTestController.executionChain.catch(result => {
     const errAdapter = new testCafe.embeddingUtils.TestRunErrorFormattableAdapter(
       result,
       {
-        testRunPhase: testController.testRun.phase,
+        testRunPhase: resolvedTestController.testRun.phase,
         userAgent:
-          testController.testRun.browserConnection.browserInfo.userAgent
+          resolvedTestController.testRun.browserConnection.browserInfo.userAgent
       }
     )
-    return testController.testRun.errs.push(errAdapter)
+    return resolvedTestController.testRun.errs.push(errAdapter)
   })
 }
 
 const ifErrorTakeScreenshot = async resolvedTestController => {
-  if (testController.testRun.opts.screenshots.takeOnFails) {
-    if (canGenerateReport()) {
-      resolvedTestController.executionChain._state = 'fulfilled'
-      return resolvedTestController.takeScreenshot().then(path => {
-        return getAttachScreenshotToReport(path)
-      })
-    } else {
-      return resolvedTestController.takeScreenshot()
-    }
+  if (resolvedTestController.testRun.opts.screenshots.takeOnFails) {
+    resolvedTestController.executionChain._state = 'fulfilled'
+    return resolvedTestController.takeScreenshot().then(path => {
+      return getAttachScreenshotToReport(path)
+    })
+  } else {
+    return resolvedTestController.takeScreenshot()
   }
 }

@@ -1,4 +1,4 @@
-import { After, AfterAll, Before, setDefaultTimeout, Status } from 'cucumber'
+import { After, Before, setDefaultTimeout, Status } from 'cucumber'
 import { existsSync, unlinkSync, writeFileSync } from 'fs'
 import { testControllerHolder } from './test-controller-holder'
 import { testController } from './world'
@@ -73,25 +73,6 @@ After(async function(testCase) {
   await cafeRunner.close()
 })
 
-AfterAll(function() {
-  let intervalId = null
-  function waitForTestCafe() {
-    intervalId = setInterval(checkLastResponse, 1000)
-  }
-
-  function checkLastResponse() {
-    if (
-      testController.testRun.lastDriverStatusResponse ===
-      'test-done-confirmation'
-    ) {
-      clearInterval(intervalId)
-      generateMultipleHtmlReport()
-    }
-  }
-
-  waitForTestCafe()
-})
-
 const getAttachScreenshotToReport = path => {
   return attachScreenshotToReport(path)
 }
@@ -102,16 +83,6 @@ const canGenerateReport = (): boolean => {
     process.argv.includes('-f') ||
     process.argv.includes('--format-options')
   )
-}
-
-function generateMultipleHtmlReport() {
-  if (process.env.CUCUMBER_HTML) {
-    try {
-      require('../reports/cucumber-multi-html.config.js')
-    } catch (error) {
-      console.warn('Could not generate cucumber html report', error)
-    }
-  }
 }
 
 const addErrorToController = async () => {

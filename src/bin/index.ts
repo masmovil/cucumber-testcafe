@@ -108,6 +108,13 @@ program
     })
 
     return cli.run().then(response => {
+      if (process.env.CUCUMBER_HTML) {
+        try {
+          require('../reports/cucumber-multi-html.config')
+        } catch (error) {
+          console.warn('Could not generate cucumber html report', error)
+        }
+      }
       if (!response.success) {
         process.exit(1)
       }

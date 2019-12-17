@@ -9,7 +9,7 @@
     "tags": "not @ignore",
     "reportHTML": true,
     "timeout": 30000,
-    "debug": true
+    "debug": false
   },
   "ci": {
     "paths": ["test/**/*.feature"],

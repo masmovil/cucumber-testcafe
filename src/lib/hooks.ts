@@ -1,6 +1,5 @@
-import { After, AfterAll, Before, setDefaultTimeout, Status } from 'cucumber'
+import { After, Before, setDefaultTimeout, Status } from 'cucumber'
 import { existsSync, unlinkSync, writeFileSync } from 'fs'
-import { exit } from 'process'
 import { testControllerHolder } from './test-controller-holder'
 import { testController } from './world'
 
@@ -36,20 +35,12 @@ function runTest(browser) {
         takeOnFails: true
       })
       .browsers(browser || 'chrome')
-      .reporter([
-        'spec',
-        {
-          name: 'json',
-          output: `${process.env.CUCUMBER_REPORTS}/report.json`
-        }
-      ])
       .run({
         skipJsErrors: true,
         selectorTimeout: TIMEOUT / 5,
         assertionTimeout: TIMEOUT / 10,
         debugOnFail: !!process.env.CUCUMBER_DEBUG
       })
-      
   })
 }
 
@@ -57,9 +48,9 @@ setDefaultTimeout(TIMEOUT)
 
 Before(async function(scenario) {
   const featureName = scenario.sourceLocation.uri
-  .split('/')
-  .slice(-1)[0]
-  .split('.')[0]
+    .split('/')
+    .slice(-1)[0]
+    .split('.')[0]
 
   const scenarioName = scenario.pickle.name
 
@@ -71,84 +62,42 @@ Before(async function(scenario) {
 
 After(async function(testCase) {
   const world = this
-
   if (testCase.result.status === Status.FAILED) {
     attachScreenshotToReport = world.attachScreenshotToReport
-    await addErrorToController()
+    await addErrorToController(testController)
     await ifErrorTakeScreenshot(testController)
   }
 
   if (existsSync(RUNNER_FILE)) unlinkSync(RUNNER_FILE)
   await testControllerHolder.free()
-  await testController.wait(500)
-  await cafeRunner.close()
-})
-
-AfterAll(function() {
-  let intervalId = null
-
-  function waitForTestCafe() {
-    intervalId = setInterval(checkLastResponse, 500)
-  }
-
-  function checkLastResponse() {
-    if (
-      testController.testRun.lastDriverStatusResponse ===
-      'test-done-confirmation'
-    ) {
-      generateMultipleHtmlReport()
-    }
-    clearInterval(intervalId)
-    
-  }
-
-  waitForTestCafe()
+  return cafeRunner.close()
 })
 
 const getAttachScreenshotToReport = path => {
   return attachScreenshotToReport(path)
 }
 
-const canGenerateReport = (): boolean => {
-  return (
-    process.argv.includes('--format') ||
-    process.argv.includes('-f') ||
-    process.argv.includes('--format-options')
-  )
-}
-
-function generateMultipleHtmlReport() {
-  if (process.env.CUCUMBER_HTML) {
-    try {
-      require('../reports/cucumber-multi-html.config.js')
-    } catch (error) {
-      console.warn('Could not generate cucumber html report', error)
-    }
-  }
-}
-
-const addErrorToController = async() => {
-  return testController.executionChain.catch(result => {
+const addErrorToController = async resolvedTestController => {
+  return resolvedTestController.executionChain.catch(result => {
     const errAdapter = new testCafe.embeddingUtils.TestRunErrorFormattableAdapter(
       result,
       {
-        testRunPhase: testController.testRun.phase,
-        userAgent: testController.testRun.browserConnection.browserInfo.userAgent
+        testRunPhase: resolvedTestController.testRun.phase,
+        userAgent:
+          resolvedTestController.testRun.browserConnection.browserInfo.userAgent
       }
     )
-    return testController.testRun.errs.push(errAdapter)
+    return resolvedTestController.testRun.errs.push(errAdapter)
   })
 }
 
 const ifErrorTakeScreenshot = async resolvedTestController => {
-  if (testController.testRun.opts.screenshots.takeOnFails) {
-    if (canGenerateReport()) {
-      resolvedTestController.executionChain._state = 'fulfilled'
-      return resolvedTestController.takeScreenshot().then(path => {
-        return getAttachScreenshotToReport(path)
-      })
-    } else {
-      return resolvedTestController.takeScreenshot()
-    }
+  if (resolvedTestController.testRun.opts.screenshots.takeOnFails) {
+    resolvedTestController.executionChain._state = 'fulfilled'
+    return resolvedTestController.takeScreenshot().then(path => {
+      return getAttachScreenshotToReport(path)
+    })
+  } else {
+    return resolvedTestController.takeScreenshot()
   }
 }

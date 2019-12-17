@@ -8,7 +8,7 @@
   },
   "scripts": {
     "clean": "npm run clean:test && rm -rf node_modules package-lock.json",
-    "clean:test": "rm -rf test/reports/features test/reports/index.html test/reports/report.json",
+    "clean:test": "rm -rf test/reports/features test/reports/index.html test/reports/report.json test/reports/assets test/reports/screenshots",
     "test": "cucumber-testcafe run",
     "reinstall": "npm run clean && npm install",
     "all": "npm run reinstall && npm run test"

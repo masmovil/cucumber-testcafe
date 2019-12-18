@@ -12,13 +12,7 @@ const pkg = require('../../package.json')
 
 clear()
 console.log(
-  chalk.red(figlet.textSync('cucumber', { horizontalLayout: 'full' }))
-)
-console.log(
-  chalk.red(figlet.textSync('         +', { horizontalLayout: 'full' }))
-)
-console.log(
-  chalk.red(figlet.textSync('testcafe', { horizontalLayout: 'full' }))
+  chalk.red(figlet.textSync('cuffee', {font: 'Big Money-nw', horizontalLayout: 'full' })),
 )
 console.log(chalk.green(pkg.version))
 

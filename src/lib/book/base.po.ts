@@ -5,6 +5,7 @@ import { xPathToCss } from '../xpath-to-css'
 import { testControllerHolder } from '../test-controller-holder'
 import { testController } from '../world'
 import { Selector, ClientFunction } from '../testcafe-helpers'
+import { resetBrowser } from '../hooks'
 
 const querystring = require('querystring')
 
@@ -171,6 +172,10 @@ export default class BasePO {
 
   pressTab() {
     return testController.pressKey('tab')
+  }
+
+  resetBrowser() {
+    return resetBrowser(testController)
   }
 
   wait(time = 500) {

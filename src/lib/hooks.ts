@@ -53,7 +53,7 @@ BeforeAll(function() {
   return testControllerHolder.get().then(t => t.maximizeWindow())
 })
 
-function resetBrowser(t) {
+export function resetBrowser(t) {
   return ClientFunction(() => {
     localStorage.clear()
     sessionStorage.clear()

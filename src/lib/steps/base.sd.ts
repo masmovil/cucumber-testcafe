@@ -111,6 +111,10 @@ Given('tabulate to next form field', async () => {
   await book.base.pressTab()
 })
 
+Given('reset browser', async () => {
+  await book.base.resetBrowser()
+})
+
 Given('wait {int} ms', async time => {
   await book.base.wait(time)
 })

@@ -151,22 +151,22 @@ export default class BasePO {
     )
   }
 
-  setFieldValueBySelector(selector, attributeName, attribute, text) {
-    return testController.typeText(
-      this.select(selector).withAttribute(attributeName, attribute),
-      text,
-      {
-        replace: true
-      }
-    )
+  setFieldValueBySelector(selector, text) {
+    return testController.typeText(this.select(selector), text, {
+      replace: true
+    })
   }
 
   isDisabledHook(hook) {
-    return testController.expect(this.selectByDataHook(hook).hasAttribute('disabled')).ok()
+    return testController
+      .expect(this.selectByDataHook(hook).hasAttribute('disabled'))
+      .ok()
   }
 
   isEnabledHook(hook) {
-    return testController.expect(this.selectByDataHook(hook).hasAttribute('disabled')).notOk()
+    return testController
+      .expect(this.selectByDataHook(hook).hasAttribute('disabled'))
+      .notOk()
   }
 
   pressTab() {

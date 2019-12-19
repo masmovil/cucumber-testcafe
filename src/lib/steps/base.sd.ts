@@ -101,9 +101,9 @@ Given(
 )
 
 Given(
-  'complete {string} with attribute {string}={string} with value {string}',
-  async (selector, attr, attrValue, value) => {
-    await book.base.setFieldValueBySelector(selector, attr, attrValue, value)
+  'complete {string} selector field-name with value {string}',
+  async (selector, value) => {
+    await book.base.setFieldValueBySelector(selector, value)
   }
 )
 

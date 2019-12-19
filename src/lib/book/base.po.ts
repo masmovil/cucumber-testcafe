@@ -5,6 +5,7 @@ import { xPathToCss } from '../xpath-to-css'
 import { testControllerHolder } from '../test-controller-holder'
 import { testController } from '../world'
 import { Selector, ClientFunction } from '../testcafe-helpers'
+import { resetBrowser } from '../hooks'
 
 const querystring = require('querystring')
 
@@ -151,26 +152,30 @@ export default class BasePO {
     )
   }
 
-  setFieldValueBySelector(selector, attributeName, attribute, text) {
-    return testController.typeText(
-      this.select(selector).withAttribute(attributeName, attribute),
-      text,
-      {
-        replace: true
-      }
-    )
+  setFieldValueBySelector(selector, text) {
+    return testController.typeText(this.select(selector), text, {
+      replace: true
+    })
   }
 
   isDisabledHook(hook) {
-    return testController.expect(this.selectByDataHook(hook).hasAttribute('disabled')).ok()
+    return testController
+      .expect(this.selectByDataHook(hook).hasAttribute('disabled'))
+      .ok()
   }
 
   isEnabledHook(hook) {
-    return testController.expect(this.selectByDataHook(hook).hasAttribute('disabled')).notOk()
+    return testController
+      .expect(this.selectByDataHook(hook).hasAttribute('disabled'))
+      .notOk()
   }
 
   pressTab() {
     return testController.pressKey('tab')
+  }
+
+  resetBrowser() {
+    return resetBrowser(testController)
   }
 
   wait(time = 500) {

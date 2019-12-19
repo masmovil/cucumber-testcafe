@@ -36,7 +36,7 @@ const testControllerHolder = {
     }
   },
 
-  get() {
+  get(): Promise<TestController> {
     return new Promise(resolve => {
       if (testControllerHolder.testController) {
         resolve(testControllerHolder.testController)

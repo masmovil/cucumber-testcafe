@@ -10,6 +10,7 @@ export default class HomePO extends BasePO {
     if (cookies.exists) {
       await testController.click(cookies)
     }
+    return Promise.resolve()
   }
 
   tariffList() {

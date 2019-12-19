@@ -101,14 +101,18 @@ Given(
 )
 
 Given(
-  'complete {string} with attribute {string}={string} with value {string}',
-  async (selector, attr, attrValue, value) => {
-    await book.base.setFieldValueBySelector(selector, attr, attrValue, value)
+  'complete {string} selector field-name with value {string}',
+  async (selector, value) => {
+    await book.base.setFieldValueBySelector(selector, value)
   }
 )
 
 Given('tabulate to next form field', async () => {
   await book.base.pressTab()
+})
+
+Given('reset browser', async () => {
+  await book.base.resetBrowser()
 })
 
 Given('wait {int} ms', async time => {

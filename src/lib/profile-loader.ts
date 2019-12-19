@@ -17,7 +17,6 @@ const defaultProfile = {
   baseURL: 'http://localhost:4200',
   timeout: 20000,
   parallel: 1,
-  debug: false,
   retry: 0
 }
 
@@ -33,7 +32,6 @@ function cucumberProfileArgs(profile) {
   process.env.CUCUMBER_HTML = mergedProfile.reportHTML
   process.env.CUCUMBER_TIMEOUT = mergedProfile.timeout
   process.env.CUCUMBER_BASEURL = mergedProfile.baseURL
-  process.env.CUCUMBER_DEBUG = mergedProfile.debug
 
   const args = [
     ...mergedProfile.paths,

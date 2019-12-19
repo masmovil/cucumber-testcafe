@@ -6,7 +6,7 @@
     "require": ["test/**/*.ts"],
     "reports": "test/reports",
     "browser": "chrome",
-    "tags": "not @ignore",
+    "tags": "@only and not @ignore",
     "reportHTML": true,
     "timeout": 30000,
     "debug": false

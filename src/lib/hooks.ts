@@ -1,7 +1,8 @@
-import { After, Before, setDefaultTimeout, Status } from 'cucumber'
+import { After, BeforeAll, AfterAll, setDefaultTimeout, Status } from 'cucumber'
 import { existsSync, unlinkSync, writeFileSync } from 'fs'
 import { testControllerHolder } from './test-controller-holder'
 import { testController } from './world'
+import { ClientFunction } from 'testcafe'
 
 // tslint:disable-next-line
 const testCafe = require('testcafe')
@@ -12,12 +13,12 @@ let cafeRunner = null
 const TIMEOUT = +process.env.CUCUMBER_TIMEOUT || 20000
 const RUNNER_FILE = `${process.env.CUCUMBER_CWD}/test/runner.js`
 
-function createTestFile(featureName = '', scenarioName = '') {
+function createTestFile() {
   writeFileSync(
     RUNNER_FILE,
     `import { testControllerHolder } from "cucumber-testcafe";\n` +
-      `fixture("${featureName}")\n` +
-      `test("${scenarioName}", testControllerHolder.capture)`
+      `fixture("Cucumber acceptance test")\n` +
+      `test("Test suite", testControllerHolder.capture)`
   )
 }
 
@@ -38,27 +39,31 @@ function runTest(browser) {
       .run({
         skipJsErrors: true,
         selectorTimeout: TIMEOUT / 5,
-        assertionTimeout: TIMEOUT / 10,
-        debugOnFail: !!process.env.CUCUMBER_DEBUG
+        assertionTimeout: TIMEOUT / 10
       })
   })
 }
 
 setDefaultTimeout(TIMEOUT)
 
-Before(async function(scenario) {
-  const featureName = scenario.sourceLocation.uri
-    .split('/')
-    .slice(-1)[0]
-    .split('.')[0]
-
-  const scenarioName = scenario.pickle.name
-
-  createTestFile(featureName, scenarioName)
+BeforeAll(function() {
+  createTestFile()
   runTest(process.env.CUCUMBER_BROWSER || this.parameters.browser)
 
-  return this.waitForTestController.then(t => t.maximizeWindow())
+  return testControllerHolder.get().then(t => t.maximizeWindow())
 })
+
+function resetBrowser(t) {
+  return ClientFunction(() => {
+    localStorage.clear()
+    sessionStorage.clear()
+    return document.cookie.split(';').forEach(function(c) {
+      document.cookie = c
+        .replace(/^ +/, '')
+        .replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/')
+    })
+  }).with({ boundTestRun: t })()
+}
 
 After(async function(testCase) {
   const world = this
@@ -68,6 +73,10 @@ After(async function(testCase) {
     await ifErrorTakeScreenshot(testController)
   }
 
+  return testControllerHolder.get().then(resetBrowser)
+})
+
+AfterAll(async function() {
   if (existsSync(RUNNER_FILE)) unlinkSync(RUNNER_FILE)
   await testControllerHolder.free()
   return cafeRunner.close()

@@ -39,6 +39,16 @@ function cucumberProfileArgs(profile) {
     process.env.CUCUMBER_BASEURL || mergedProfile.baseURL
   process.env.CUCUMBER_TAGS = process.env.CUCUMBER_TAGS || mergedProfile.tags
 
+  mergedProfile.reports = process.env.CUCUMBER_REPORTS || mergedProfile.reports
+  mergedProfile.browser = process.env.CUCUMBER_BROWSER || mergedProfile.browser
+  mergedProfile.reportHTML =
+    process.env.CUCUMBER_HTML || mergedProfile.reportHTML
+  mergedProfile.timeout = process.env.CUCUMBER_TIMEOUT || mergedProfile.timeout
+  mergedProfile.baseURL = process.env.CUCUMBER_BASEURL || mergedProfile.baseURL
+  mergedProfile.tags = process.env.CUCUMBER_TAGS || mergedProfile.tags
+
+  console.info('computed profile: ', mergedProfile)
+
   const args = [
     ...mergedProfile.paths,
     ...mergedProfile.requireModule.map(requiredModule => [
@@ -48,10 +58,10 @@ function cucumberProfileArgs(profile) {
     ...mergedProfile.require.map(required => ['--require', required]),
 
     `--tags`,
-    `${process.env.CUCUMBER_TAGS}`,
+    `${mergedProfile.tags}`,
     '--format',
 
-    `json:${process.env.CUCUMBER_REPORTS}/report.json`,
+    `json:${mergedProfile.reports}/report.json`,
     `--parallel`,
     `${mergedProfile.parallel}`,
     `--retry`,

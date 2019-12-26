@@ -28,8 +28,7 @@
       true,
       "log",
       "error",
-      "debug",
-      "info",
+      "debug",,
       "time",
       "timeEnd",
       "trace"

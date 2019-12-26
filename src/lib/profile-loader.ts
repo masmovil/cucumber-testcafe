@@ -27,11 +27,17 @@ function cucumberProfileArgs(profile) {
     require: [...defaultProfile.require, ...(profile.require || [])]
   }
 
-  process.env.CUCUMBER_REPORTS = mergedProfile.reports
-  process.env.CUCUMBER_BROWSER = mergedProfile.browser
-  process.env.CUCUMBER_HTML = mergedProfile.reportHTML
-  process.env.CUCUMBER_TIMEOUT = mergedProfile.timeout
-  process.env.CUCUMBER_BASEURL = mergedProfile.baseURL
+  process.env.CUCUMBER_REPORTS =
+    process.env.CUCUMBER_REPORTS || mergedProfile.reports
+  process.env.CUCUMBER_BROWSER =
+    process.env.CUCUMBER_BROWSER || mergedProfile.browser
+  process.env.CUCUMBER_HTML =
+    process.env.CUCUMBER_HTML || mergedProfile.reportHTML
+  process.env.CUCUMBER_TIMEOUT =
+    process.env.CUCUMBER_TIMEOUT || mergedProfile.timeout
+  process.env.CUCUMBER_BASEURL =
+    process.env.CUCUMBER_BASEURL || mergedProfile.baseURL
+  process.env.CUCUMBER_TAGS = process.env.CUCUMBER_TAGS || mergedProfile.tags
 
   const args = [
     ...mergedProfile.paths,
@@ -42,10 +48,10 @@ function cucumberProfileArgs(profile) {
     ...mergedProfile.require.map(required => ['--require', required]),
 
     `--tags`,
-    `${mergedProfile.tags}`,
+    `${process.env.CUCUMBER_TAGS}`,
     '--format',
 
-    `json:${mergedProfile.reports}/report.json`,
+    `json:${process.env.CUCUMBER_REPORTS}/report.json`,
     `--parallel`,
     `${mergedProfile.parallel}`,
     `--retry`,

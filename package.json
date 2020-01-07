@@ -31,29 +31,31 @@
   },
   "homepage": "https://github.com/masmovil/cucumber-testcafe#readme",
   "dependencies": {
-    "@types/cucumber": "^4.0.7",
+    "@types/cucumber": "^6.0.0",
+    "@types/node": "^13.1.4",
     "base64-img": "^1.0.4",
-    "chalk": "^2.4.2",
+    "chalk": "^3.0.0",
     "clear": "^0.1.0",
-    "commander": "^4.0.0",
-    "cucumber": "^6.0.3",
+    "commander": "^4.1.0",
+    "cucumber": "^6.0.5",
+    "cucumber-pretty": "^6.0.0",
     "figlet": "^1.2.4",
     "fs-extra": "^8.1.0",
-    "multiple-cucumber-html-reporter": "^1.13.1",
-    "testcafe": "^1.6.0",
-    "ts-node": "^8.4.1",
+    "multiple-cucumber-html-reporter": "^1.13.2",
+    "testcafe": "^1.7.1",
+    "ts-node": "^8.5.4",
     "tslib": "^1.10.0",
-    "typescript": "^3.6.4"
+    "typescript": "^3.7.4"
   },
   "devDependencies": {
-    "prettier": "1.18.2",
-    "tslint": "^5.20.0",
+    "prettier": "1.19.1",
+    "tslint": "^5.20.1",
     "tslint-config-prettier": "~1.18.0",
     "tslint-config-standard": "~9.0.0",
     "tslint-defocus": "^2.0.6",
-    "tslint-plugin-prettier": "^2.0.1"
+    "tslint-plugin-prettier": "^2.1.0"
   },
   "peerDependencies": {
-    "@types/node": "^12.x"
+    "@types/node": "^13.x"
   }
 }

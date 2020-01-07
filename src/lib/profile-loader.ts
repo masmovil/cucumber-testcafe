@@ -59,9 +59,13 @@ function cucumberProfileArgs(profile) {
 
     `--tags`,
     `${mergedProfile.tags}`,
-    '--format',
 
+    '--format',
     `json:${mergedProfile.reports}/report.json`,
+
+    '--format',
+    `node_modules/cucumber-testcafe/node_modules/cucumber-pretty`,
+
     `--parallel`,
     `${mergedProfile.parallel}`,
     `--retry`,

@@ -27,6 +27,8 @@ function cucumberProfileArgs(profile) {
     require: [...defaultProfile.require, ...(profile.require || [])]
   }
 
+  process.env.CUCUMBER_PLUGINS =
+    process.env.CUCUMBER_PLUGINS || 'node_modules'
   process.env.CUCUMBER_REPORTS =
     process.env.CUCUMBER_REPORTS || mergedProfile.reports
   process.env.CUCUMBER_BROWSER =
@@ -64,7 +66,7 @@ function cucumberProfileArgs(profile) {
     `json:${mergedProfile.reports}/report.json`,
 
     '--format',
-    `node_modules/cucumber-testcafe/node_modules/cucumber-pretty`,
+    `${process.env.CUCUMBER_PLUGINS}/cucumber-pretty`,
 
     `--parallel`,
     `${mergedProfile.parallel}`,

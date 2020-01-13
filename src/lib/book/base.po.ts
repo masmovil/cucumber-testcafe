@@ -38,8 +38,8 @@ export default class BasePO {
     return ClientFunction(() => window.history.back())()
   }
 
-  select(selector) {
-    return Selector(selector)
+  select(selector, options = null) {
+    return Selector(selector, options)
   }
 
   // TODO: remove this function

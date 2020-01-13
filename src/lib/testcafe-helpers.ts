@@ -5,8 +5,8 @@ import {
 
 import { testController } from './world'
 
-export function Selector(selector) {
-  return SelectorBase(selector).with({ boundTestRun: testController })
+export function Selector(selector, options = null) {
+  return SelectorBase(selector, options).with({ boundTestRun: testController })
 }
 
 export function ClientFunction(fn) {

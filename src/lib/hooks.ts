@@ -10,7 +10,7 @@ const testCafe = require('testcafe')
 let attachScreenshotToReport = null
 let cafeRunner = null
 
-const TIMEOUT = +process.env.CUCUMBER_TIMEOUT || 20000
+const TIMEOUT = 10000
 const RUNNER_FILE = `${process.env.CUCUMBER_CWD}/test/runner.js`
 
 function createTestFile() {
@@ -38,8 +38,8 @@ function runTest(browser) {
       .browsers(browser || 'chrome')
       .run({
         skipJsErrors: true,
-        selectorTimeout: TIMEOUT / 5,
-        assertionTimeout: TIMEOUT / 10
+        selectorTimeout: 5000,
+        assertionTimeout: 10000
       })
   })
 }

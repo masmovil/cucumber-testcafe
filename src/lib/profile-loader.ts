@@ -15,7 +15,7 @@ const defaultProfile = {
   reports: 'test/reports',
   reportHTML: false,
   baseURL: 'http://localhost:4200',
-  timeout: 20000,
+  timeout: 10000,
   parallel: 1,
   retry: 0
 }
@@ -27,8 +27,7 @@ function cucumberProfileArgs(profile) {
     require: [...defaultProfile.require, ...(profile.require || [])]
   }
 
-  process.env.CUCUMBER_PLUGINS =
-    process.env.CUCUMBER_PLUGINS || 'node_modules'
+  process.env.CUCUMBER_PLUGINS = process.env.CUCUMBER_PLUGINS || 'node_modules'
   process.env.CUCUMBER_REPORTS =
     process.env.CUCUMBER_REPORTS || mergedProfile.reports
   process.env.CUCUMBER_BROWSER =

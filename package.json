@@ -10,7 +10,7 @@
   "scripts": {
     "all": "npm run clean && npm i && npm i -g",
     "clean": "rm -rf node_modules package-lock.json dist",
-    "postinstall": "npm run build",
+    "postinstall": "npm run build --scripts-prepend-node-path",
     "build": "npx tsc -p tsconfig.json",
     "test": "cd example-project && npm run all && cd ..",
     "lint": "npx prettier src/**/*.ts --write && npx tslint -c tslint.json 'src/**/*.ts'"
@@ -31,6 +31,7 @@
   },
   "homepage": "https://github.com/masmovil/cucumber-testcafe#readme",
   "dependencies": {
+    "@types/cucumber": "^6.0.0",
     "base64-img": "^1.0.4",
     "chalk": "^3.0.0",
     "clear": "^0.1.0",
@@ -46,13 +47,14 @@
     "typescript": "^3.7.5"
   },
   "devDependencies": {
-    "@types/cucumber": "^6.0.0",
-    "@types/node": "^13.1.8",
     "prettier": "1.19.1",
     "tslint": "^6.0.0",
     "tslint-config-prettier": "~1.18.0",
     "tslint-config-standard": "~9.0.0",
     "tslint-defocus": "^2.0.6",
     "tslint-plugin-prettier": "^2.1.0"
+  },
+  "peerDependencies": {
+    "@types/node": "^13.x"
   }
 }

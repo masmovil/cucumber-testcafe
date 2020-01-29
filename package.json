@@ -55,6 +55,6 @@
     "tslint-plugin-prettier": "^2.1.0"
   },
   "peerDependencies": {
-    "@types/node": "^13.x"
+    "@types/node": "*"
   }
 }

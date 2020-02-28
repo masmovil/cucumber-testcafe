@@ -31,20 +31,20 @@
   },
   "homepage": "https://github.com/masmovil/cucumber-testcafe#readme",
   "dependencies": {
-    "@types/cucumber": "^6.0.0",
+    "@types/cucumber": "^6.0.1",
     "base64-img": "^1.0.4",
     "chalk": "^3.0.0",
     "clear": "^0.1.0",
-    "commander": "^4.1.0",
+    "commander": "^4.1.1",
     "cucumber": "^6.0.5",
     "cucumber-pretty": "^6.0.0",
-    "figlet": "^1.2.4",
+    "figlet": "^1.3.0",
     "fs-extra": "^8.1.0",
-    "multiple-cucumber-html-reporter": "^1.13.2",
-    "testcafe": "^1.8.0",
+    "multiple-cucumber-html-reporter": "^1.15.1",
+    "testcafe": "^1.8.2",
     "ts-node": "^8.6.2",
-    "tslib": "^1.10.0",
-    "typescript": "^3.7.5"
+    "tslib": "^1.11.1",
+    "typescript": "^3.8.2"
   },
   "devDependencies": {
     "prettier": "1.19.1",

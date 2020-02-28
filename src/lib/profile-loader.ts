@@ -13,6 +13,7 @@ const defaultProfile = {
   tags: 'not @ignore',
   browser: 'chrome',
   reports: 'test/reports',
+  pluginsPath: 'node_modules',
   reportHTML: false,
   baseURL: 'http://localhost:4200',
   timeout: 10000,
@@ -27,7 +28,8 @@ function cucumberProfileArgs(profile) {
     require: [...defaultProfile.require, ...(profile.require || [])]
   }
 
-  process.env.CUCUMBER_PLUGINS = process.env.CUCUMBER_PLUGINS || 'node_modules'
+  process.env.CUCUMBER_PLUGINS =
+    process.env.CUCUMBER_PLUGINS || mergedProfile.pluginsPath
   process.env.CUCUMBER_REPORTS =
     process.env.CUCUMBER_REPORTS || mergedProfile.reports
   process.env.CUCUMBER_BROWSER =

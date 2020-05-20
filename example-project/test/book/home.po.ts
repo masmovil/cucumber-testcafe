@@ -5,7 +5,7 @@ export default class HomePO extends BasePO {
   static pageName = 'home'
 
   async assertCookies() {
-    const cookies = await this.select('div[class*="cookies close"]')
+    const cookies = await this.select('.thor-cookies-popup__button')
 
     if (cookies.exists) {
       await testController.click(cookies)

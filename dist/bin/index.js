@@ -26,7 +26,10 @@ var path = require('path');
 var program = require('commander');
 var pkg = require('../../package.json');
 clear();
-console.log(chalk.red(figlet.textSync('cuffee', { font: 'Big Money-nw', horizontalLayout: 'full' })));
+console.log(chalk.red(figlet.textSync('cuffee', {
+    font: 'Big Money-nw',
+    horizontalLayout: 'full',
+})));
 console.log(chalk.green(pkg.version));
 program.version(pkg.version).description('cucumber-testcafe CLI');
 var EXAMPLE_PROJECT_DIR = __dirname + "/../../example-project";
@@ -39,14 +42,14 @@ program
     fs.copySync(EXAMPLE_PROJECT_DIR + '/test', dest, {
         filter: function (src) {
             return !src.includes('node_modules');
-        }
+        },
     });
     fs.copySync(EXAMPLE_PROJECT_DIR + '/cucumber.profiles.json', dest + '/../cucumber.profiles.json');
     // copy vscode settings
     var exampleVSCodeSettings = JSON.parse(fs.readFileSync(EXAMPLE_PROJECT_DIR + '/.vscode/settings.json', 'utf8'));
     exampleVSCodeSettings['cucumberautocomplete.steps'] = [
         dest + '/steps/*.sd.ts',
-        'node_modules/cucumber-testcafe/dist/lib/steps/*.sd.js'
+        'node_modules/cucumber-testcafe/dist/lib/steps/*.sd.js',
     ];
     exampleVSCodeSettings['cucumberautocomplete.syncfeatures'] =
         dest + '/steps/*.feature';
@@ -78,9 +81,11 @@ program
     var cli = new cucumber.Cli({
         argv: __spreadArrays([null, __filename], profile),
         cwd: process.env.CUCUMBER_CWD,
-        stdout: process.stdout
+        stdout: process.stdout,
     });
-    return cli.run().then(function (response) {
+    return cli
+        .run()
+        .then(function (response) {
         if (process.env.CUCUMBER_HTML) {
             try {
                 require('../reports/cucumber-multi-html.config');

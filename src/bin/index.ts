@@ -12,7 +12,12 @@ const pkg = require('../../package.json')
 
 clear()
 console.log(
-  chalk.red(figlet.textSync('cuffee', {font: 'Big Money-nw', horizontalLayout: 'full' })),
+  chalk.red(
+    figlet.textSync('cuffee', {
+      font: 'Big Money-nw',
+      horizontalLayout: 'full',
+    })
+  )
 )
 console.log(chalk.green(pkg.version))
 
@@ -23,15 +28,15 @@ const EXAMPLE_PROJECT_DIR = `${__dirname}/../../example-project`
 program
   .command('init [folder]')
   .description('Creates basic test scaffolding')
-  .action(function(folder) {
+  .action(function (folder) {
     const dest = process.cwd() + '/' + (folder || 'test')
 
     console.log('Generating test folder in', dest)
 
     fs.copySync(EXAMPLE_PROJECT_DIR + '/test', dest, {
-      filter: src => {
+      filter: (src) => {
         return !src.includes('node_modules')
-      }
+      },
     })
 
     fs.copySync(
@@ -45,7 +50,7 @@ program
     )
     exampleVSCodeSettings['cucumberautocomplete.steps'] = [
       dest + '/steps/*.sd.ts',
-      'node_modules/cucumber-testcafe/dist/lib/steps/*.sd.js'
+      'node_modules/cucumber-testcafe/dist/lib/steps/*.sd.js',
     ]
     exampleVSCodeSettings['cucumberautocomplete.syncfeatures'] =
       dest + '/steps/*.feature'
@@ -88,7 +93,7 @@ program
 program
   .command('run')
   .description('Runs all detected gherkin specs')
-  .action(function() {
+  .action(function () {
     process.env.CUCUMBER_CWD = process.env.CUCUMBER_CWD || process.cwd()
 
     const profile = require('../lib/profile-loader')
@@ -98,22 +103,28 @@ program
     const cli = new cucumber.Cli({
       argv: [null, __filename, ...profile],
       cwd: process.env.CUCUMBER_CWD,
-      stdout: process.stdout
+      stdout: process.stdout,
     })
 
-    return cli.run().then(response => {
-      if (process.env.CUCUMBER_HTML) {
-        try {
-          require('../reports/cucumber-multi-html.config')
-        } catch (error) {
-          console.warn('Could not generate cucumber html report', error)
+    return cli
+      .run()
+      .then((response) => {
+        if (process.env.CUCUMBER_HTML) {
+          try {
+            require('../reports/cucumber-multi-html.config')
+          } catch (error) {
+            console.warn('Could not generate cucumber html report', error)
+          }
         }
-      }
-      if (!response.success) {
-        process.exit(1)
-      }
-      return response
-    })
+        if (!response.success) {
+          process.exitCode = 1
+        }
+        return response
+      })
+      .catch((e) => {
+        console.log(e)
+        process.exitCode = 1
+      })
   })
 
 program.parse(process.argv)

@@ -90,9 +90,13 @@ program
             }
         }
         if (!response.success) {
-            process.exit(1);
+            process.exitCode = 1;
         }
         return response;
+    })
+        .catch(function (e) {
+        console.log(e);
+        process.exitCode = 1;
     });
 });
 program.parse(process.argv);

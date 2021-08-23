@@ -8,10 +8,18 @@ export interface TestControllerWithTestRun extends TestController {
   testRun?: any
 }
 let browser: TestControllerWithTestRun = null
-class CustomWorld extends RPWorld{
+class CustomWorld{
 
-// attach: any
-// params: any
+ attach: any
+ parameters: any
+
+constructor(attach,parameters){
+this.attach = attach
+this.parameters = parameters
+
+
+}
+
 
 waitForTestController = testControllerHolder
 .get()

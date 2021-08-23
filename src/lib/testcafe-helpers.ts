@@ -3,14 +3,14 @@ import {
   ClientFunction as ClientFunctionBase
 } from 'testcafe'
 
-import { testController } from './world'
+import { browser } from './world'
 
 export function Selector(selector, options = null) {
-  return SelectorBase(selector, options).with({ boundTestRun: testController })
+  return SelectorBase(selector, options).with({ boundTestRun: browser })
 }
 
 export function ClientFunction(fn) {
   return ClientFunctionBase(fn).with({
-    boundTestRun: testController
+    boundTestRun: browser
   })
 }

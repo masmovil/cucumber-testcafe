@@ -1,5 +1,5 @@
 /**
- * Will get called once the TestController instance gets available
+ * Will get called once the browser instance gets available
  * see {@link testControllerHolder#register} and {@link testControllerHolder#capture}
  */
 export interface TestControllerListener {
@@ -7,7 +7,7 @@ export interface TestControllerListener {
 }
 
 const testControllerHolder = {
-  testController: null,
+  browser: null,
   captureResolver: null,
   getResolver: null,
   testControllerListener: null,
@@ -15,7 +15,7 @@ const testControllerHolder = {
   baseURL: process.env.CUCUMBER_BASEURL,
 
   capture(t: TestController) {
-    testControllerHolder.testController = t
+    testControllerHolder.browser = t
 
     if (testControllerHolder.getResolver) {
       testControllerHolder.getResolver(t)
@@ -28,8 +28,8 @@ const testControllerHolder = {
 
   free() {
     testControllerHolder.lastTestController =
-      testControllerHolder.testController
-    testControllerHolder.testController = null
+      testControllerHolder.browser
+    testControllerHolder.browser = null
 
     if (testControllerHolder.captureResolver) {
       testControllerHolder.captureResolver()
@@ -38,8 +38,8 @@ const testControllerHolder = {
 
   get(): Promise<TestController> {
     return new Promise(resolve => {
-      if (testControllerHolder.testController) {
-        resolve(testControllerHolder.testController)
+      if (testControllerHolder.browser) {
+        resolve(testControllerHolder.browser)
       } else {
         testControllerHolder.getResolver = resolve
       }

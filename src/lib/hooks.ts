@@ -1,7 +1,7 @@
 import { After, BeforeAll, AfterAll, setDefaultTimeout, Status } from 'cucumber'
 import { existsSync, unlinkSync, writeFileSync } from 'fs'
 import { testControllerHolder } from './test-controller-holder'
-import { testController } from './world'
+import { browser } from './world'
 import { ClientFunction } from 'testcafe'
 
 // tslint:disable-next-line
@@ -69,8 +69,8 @@ After(async function(testCase) {
   const world = this
   if (testCase.result.status === Status.FAILED) {
     attachScreenshotToReport = world.attachScreenshotToReport
-    await addErrorToController(testController)
-    await ifErrorTakeScreenshot(testController)
+    await addErrorToController(browser)
+    await ifErrorTakeScreenshot(browser)
   }
 
   return testControllerHolder.get().then(resetBrowser)

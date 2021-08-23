@@ -3,7 +3,7 @@
 // TODO: remove xpath-to-css selector
 import { xPathToCss } from '../xpath-to-css'
 import { testControllerHolder } from '../test-controller-holder'
-import { testController } from '../world'
+import { browser } from '../world'
 import { Selector, ClientFunction } from '../testcafe-helpers'
 import { resetBrowser } from '../hooks'
 
@@ -30,11 +30,11 @@ export default class BasePO {
         : params.baseURL
     }${params.path}?${querystring.stringify(params.qParams)}`
 
-    return testController.navigateTo(url)
+    return browser.navigateTo(url)
   }
 
   goBack() {
-    // TODO: ClientFunction as factory with testcontroller binded
+    // TODO: ClientFunction as factory with browser binded
     return ClientFunction(() => window.history.back())()
   }
 
@@ -70,80 +70,80 @@ export default class BasePO {
   }
 
   async setResolutionSize(val1, val2) {
-    return testController.resizeWindow(val1, val2)
+    return browser.resizeWindow(val1, val2)
   }
 
   async refreshPage() {
     const url = await this.getUrl()
-    return testController.navigateTo(url)
+    return browser.navigateTo(url)
   }
 
   isPresentText(text, dataHookContext?) {
     const properties = ['a', 'p', 'div', 'li', 'span', 'h1', 'h2', 'h3', 'h4']
 
     return dataHookContext
-      ? testController
+      ? browser
           .expect(
             this.selectByDataHook(dataHookContext)
               .find(properties.join(','))
               .withText(text).exists
           )
           .ok()
-      : testController
+      : browser
           .expect(this.select(properties.join(',')).withText(text).exists)
           .ok()
   }
 
   isPresentByDataHook(dataHook) {
-    return testController.expect(this.selectByDataHook(dataHook).exists).ok()
+    return browser.expect(this.selectByDataHook(dataHook).exists).ok()
   }
 
   isNotPresentByDataHook(dataHook) {
-    return testController.expect(this.selectByDataHook(dataHook).exists).notOk()
+    return browser.expect(this.selectByDataHook(dataHook).exists).notOk()
   }
 
   isPresentBySelector(selector) {
-    return testController.expect(this.select(selector).exists).ok()
+    return browser.expect(this.select(selector).exists).ok()
   }
 
   isNotPresentBySelector(selector) {
-    return testController.expect(this.select(selector).exists).notOk()
+    return browser.expect(this.select(selector).exists).notOk()
   }
 
   clickByDataHook(dataHook) {
-    return testController.click(this.selectByDataHook(dataHook))
+    return browser.click(this.selectByDataHook(dataHook))
   }
 
   clickBySelector(selector, index = 0) {
-    return testController.click(this.select(selector).nth(index))
+    return browser.click(this.select(selector).nth(index))
   }
 
   clickByText(text) {
-    return testController.click(
+    return browser.click(
       this.select('a, p, li, span, button, em').withText(text)
     )
   }
 
   clickByNameValue(type, name, value) {
-    return testController.click(
+    return browser.click(
       this.select(`[type=${type}][name=${name}][value="${value}"]`)
     )
   }
 
   clickByNameIndex(type, name, index) {
-    return testController.click(
+    return browser.click(
       this.select(`[type=${type}][name=${name}]`).nth(index)
     )
   }
 
   async isFieldWithValue(fieldName, value) {
-    return testController
+    return browser
       .expect(await this.select(`input[name*="${fieldName}"]`).value)
       .eql(value)
   }
 
   setFieldValueByName(fieldName, text) {
-    return testController.typeText(
+    return browser.typeText(
       this.select(`input[name*="${fieldName}"]`),
       text,
       {
@@ -153,36 +153,36 @@ export default class BasePO {
   }
 
   setFieldValueBySelector(selector, text) {
-    return testController.typeText(this.select(selector), text, {
+    return browser.typeText(this.select(selector), text, {
       replace: true
     })
   }
 
   isDisabledHook(hook) {
-    return testController
+    return browser
       .expect(this.selectByDataHook(hook).hasAttribute('disabled'))
       .ok()
   }
 
   isEnabledHook(hook) {
-    return testController
+    return browser
       .expect(this.selectByDataHook(hook).hasAttribute('disabled'))
       .notOk()
   }
 
   pressTab() {
-    return testController.pressKey('tab')
+    return browser.pressKey('tab')
   }
 
   resetBrowser() {
-    return resetBrowser(testController)
+    return resetBrowser(browser)
   }
 
   wait(time = 500) {
-    return testController.wait(time)
+    return browser.wait(time)
   }
 
   debug() {
-    return testController.debug()
+    return browser.debug()
   }
 }

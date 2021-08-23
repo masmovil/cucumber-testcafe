@@ -1,5 +1,5 @@
 import { BasePO } from 'cucumber-testcafe'
-import { testController } from 'cucumber-testcafe/dist/lib/world'
+import { browser } from 'cucumber-testcafe/dist/lib/world'
 
 export default class HomePO extends BasePO {
   static pageName = 'home'

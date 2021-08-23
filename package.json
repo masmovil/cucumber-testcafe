@@ -48,6 +48,7 @@
     "typescript": "^4.0.2"
   },
   "devDependencies": {
+    "@reportportal/agent-js-cucumber": "^5.0.2",
     "prettier": "2.1.1",
     "tslint": "^6.1.3",
     "tslint-config-prettier": "~1.18.0",

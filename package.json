@@ -8,7 +8,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "all": "npm run clean && npm i && npm i -g",
+    "all": "npm run clean && npm i",
     "clean": "rm -rf node_modules package-lock.json dist",
     "postinstall": "npm run build --scripts-prepend-node-path",
     "build": "npx tsc -p tsconfig.json",
@@ -32,6 +32,7 @@
   "homepage": "https://github.com/masmovil/cucumber-testcafe#readme",
   "dependencies": {
     "@types/cucumber": "^6.0.1",
+    "@reportportal/agent-js-cucumber": "^5.0.2",
     "base64-img": "^1.0.4",
     "chalk": "^4.1.0",
     "clear": "^0.1.0",

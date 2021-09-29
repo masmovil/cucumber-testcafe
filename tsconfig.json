@@ -13,7 +13,7 @@
     "noResolve": false,
     "module": "commonjs",
     "moduleResolution": "node",
-    "target": "es5",
+    "target": "es6",
     "typeRoots": [
       "./node_modules/@types"
     ],
@@ -23,9 +23,8 @@
       "testcafe"
     ],
     "lib": [
-      "dom",
-      "es2015",
-      "es6"
+      "es6",
+      "DOM"
     ]
   },
   "include": [

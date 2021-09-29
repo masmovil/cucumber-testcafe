@@ -12,10 +12,11 @@ class CustomWorld {
 
   attach: any
   parameters: any
-
+  currPage: any 
   constructor(attach, parameters) {
     this.attach = attach
     this.parameters = parameters
+    this.currPage = null 
   }
 
   waitForTestController = testControllerHolder

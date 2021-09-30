@@ -8,15 +8,13 @@ export interface TestControllerWithTestRun extends TestController {
   testRun?: any
 }
 let browser: TestControllerWithTestRun = null
-class CustomWorld {
-
+class CustomWorld extends RPWorld {
   attach: any
   parameters: any
-  currPage: any 
+  currPage: any
   constructor(attach, parameters) {
-    this.attach = attach
-    this.parameters = parameters
-    this.currPage = null 
+    super(attach, parameters)
+    this.currPage = null
   }
 
   waitForTestController = testControllerHolder
@@ -26,7 +24,7 @@ class CustomWorld {
       return tc
     })
 
-  attachScreenshotToReport = pathToScreenshot => {
+  attachScreenshotToReport = (pathToScreenshot) => {
     const imgInBase64 = base64Sync(pathToScreenshot)
     const imageConvertForCuc = imgInBase64.substring(
       imgInBase64.indexOf(',') + 1

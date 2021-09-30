@@ -67,7 +67,7 @@ function cucumberProfileArgs(profile) {
     `json:${mergedProfile.reports}/report.json`,
 
     '--format',
-    `${process.env.CUCUMBER_PLUGINS}/cucumber-pretty`,
+     'local_modules/cucumber-testcafe/rpFormatter.js',
 
     `--parallel`,
     `${mergedProfile.parallel}`,

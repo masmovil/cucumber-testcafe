@@ -1,0 +1,19 @@
+{
+    "token": "478a653c-3216-40bd-981b-7f09060240fa",
+    "endpoint": "https://reportportal.qa.tucows.net/api/v1",
+    "launch": "jpatel01_TEST_EXAMPLE",
+    "project": "jpatel01_personal",
+    "takeScreenshot": "onFailure",
+    "description": "Awesome launch description.",
+    "attributes": [
+      {
+        "key": "launchAttributeKey",
+        "value": "launchAttributeValue"
+      }
+    ],
+    "mode": "DEFAULT",
+    "debug": false,
+    "restClientConfig": {
+      "timeout": 0
+    }
+  }

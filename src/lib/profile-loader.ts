@@ -49,7 +49,6 @@ function cucumberProfileArgs(profile) {
   mergedProfile.timeout = process.env.CUCUMBER_TIMEOUT || mergedProfile.timeout
   mergedProfile.baseURL = process.env.CUCUMBER_BASEURL || mergedProfile.baseURL
   mergedProfile.tags = process.env.CUCUMBER_TAGS || mergedProfile.tags
-
   console.info('computed profile: ', mergedProfile)
 
   const args = [
@@ -63,14 +62,9 @@ function cucumberProfileArgs(profile) {
     `--tags`,
     `${mergedProfile.tags}`,
 
-    '--format',
-    `json:${mergedProfile.reports}/report.json`,
-
-    '--format',
-     'local_modules/cucumber-testcafe/rpFormatter.js',
-
     `--parallel`,
     `${mergedProfile.parallel}`,
+    ...mergedProfile.formatters,
     `--retry`,
     `${mergedProfile.retry}`
   ]

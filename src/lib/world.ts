@@ -12,9 +12,10 @@ class CustomWorld extends RPWorld {
   attach: any
   parameters: any
   currPage: any
-  constructor(attach, parameters) {
-    super(attach, parameters)
+  sharedData: any
+  constructor(attach, parameters) {    super(attach, parameters)
     this.currPage = null
+    this.sharedData = {}
   }
 
   waitForTestController = testControllerHolder

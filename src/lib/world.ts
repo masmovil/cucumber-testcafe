@@ -11,11 +11,13 @@ let browser: TestControllerWithTestRun = null
 class CustomWorld extends RPWorld {
   attach: any
   parameters: any
-  currPage: any
+  currPage: any 
   sharedData: any
-  constructor(attach, parameters) {    super(attach, parameters)
-    this.currPage = null
-    this.sharedData = {}
+  constructor(attach, parameters) {
+    this.attach = attach
+    this.parameters = parameters
+    this.currPage = null 
+    this.sharedData= {}
   }
 
   waitForTestController = testControllerHolder

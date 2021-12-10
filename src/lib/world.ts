@@ -14,8 +14,7 @@ class CustomWorld extends RPWorld {
   currPage: any 
   sharedData: any
   constructor(attach, parameters) {
-    this.attach = attach
-    this.parameters = parameters
+    super(attach,parameters)
     this.currPage = null 
     this.sharedData= {}
   }

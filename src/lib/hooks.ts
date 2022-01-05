@@ -10,8 +10,8 @@ const testCafe = require('testcafe')
 let attachScreenshotToReport = null
 let cafeRunner = null
 
-const TIMEOUT = +process.env.CUCUMBER_TIMEOUT || 10000
-const RUNNER_FILE = `${process.env.CUCUMBER_CWD}/test/runner.js`
+const TIMEOUT = +process.env.CUCUMBER_TIMEOUT || 30000
+const RUNNER_FILE = `${process.env.CUCUMBER_CWD}/test/${process.env.CUCUMBER_SLAVE_ID}_runner.js`
 
 function createTestFile() {
   writeFileSync(

@@ -53,6 +53,8 @@ function cucumberProfileArgs(profile) {
 
   const args = [
     ...mergedProfile.paths,
+    ...mergedProfile.formatters,
+
     ...mergedProfile.requireModule.map(requiredModule => [
       '--require-module',
       requiredModule
@@ -64,7 +66,6 @@ function cucumberProfileArgs(profile) {
 
     `--parallel`,
     `${mergedProfile.parallel}`,
-    ...mergedProfile.formatters,
     `--retry`,
     `${mergedProfile.retry}`
   ]

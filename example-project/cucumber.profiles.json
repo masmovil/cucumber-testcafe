@@ -8,6 +8,9 @@
     "browser": "chrome",
     "tags": "@only and not @ignore",
     "reportHTML": true,
+    "reportName": "QA Suite project nama",
+    "displayDuration": true,
+    "durationInMS": false,
     "timeout": 30000
   },
   "ci": {
@@ -19,6 +22,9 @@
     "browser": "chrome:headless",
     "tags": "not @ignore",
     "reportHTML": true,
+    "reportName": "QA Suite project nama",
+    "displayDuration": true,
+    "durationInMS": false,
     "parallel": 2,
     "retry": 1
   }

@@ -3,18 +3,18 @@ const reporter = require('multiple-cucumber-html-reporter')
 const options = {
   jsonDir: process.env.CUCUMBER_REPORTS,
   reportPath: process.env.CUCUMBER_REPORTS,
-  reportName: 'You can adjust this report name',
+  reportName: process.env.CUCUMBER_REPORT_NAME || 'You can adjust this report name',
   customMetadata: false,
-  displayDuration: true,
-  durationInMS: true,
+  displayDuration: process.env.CUCUMBER_REPORT_DISPLAY_DURATION,
+  durationInMS: process.env.CUCUMBER_REPORT_DURATION_MS,
   disableLog: true,
   metadata: {
     browser: {
-      name: '.'
+      name: process.env.CUCUMBER_BROWSER || '.'
     },
     device: '.',
     platform: {
-      name: '.',
+      name: process.env.CUCUMBER_BROWSER || '.',
       version: '.'
     }
   }

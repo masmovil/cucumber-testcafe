@@ -5,16 +5,16 @@ const options = {
   reportPath: process.env.CUCUMBER_REPORTS,
   reportName: process.env.CUCUMBER_REPORT_NAME || 'You can adjust this report name',
   customMetadata: false,
-  displayDuration: process.env.CUCUMBER_REPORT_DISPLAY_DURATION,
-  durationInMS: process.env.CUCUMBER_REPORT_DURATION_MS,
+  displayDuration: process.env.CUCUMBER_REPORT_DISPLAY_DURATION === "true",
+  durationInMS: process.env.CUCUMBER_REPORT_DURATION_MS === "true",
   disableLog: true,
   metadata: {
     browser: {
-      name: process.env.CUCUMBER_BROWSER || '.'
+      name: process.env.CUCUMBER_BROWSER_NAME || process.env.CUCUMBER_BROWSER || '.'
     },
     device: '.',
     platform: {
-      name: process.env.CUCUMBER_BROWSER || '.',
+      name: process.env.CUCUMBER_BROWSER_NAME || process.env.CUCUMBER_BROWSER || '.',
       version: '.'
     }
   }

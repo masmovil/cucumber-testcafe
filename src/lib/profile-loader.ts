@@ -36,6 +36,8 @@ function cucumberProfileArgs(profile) {
     process.env.CUCUMBER_BROWSER || mergedProfile.browser
   process.env.CUCUMBER_HTML =
     process.env.CUCUMBER_HTML || mergedProfile.reportHTML
+  process.env.CUCUMBER_BROWSER_NAME =
+    process.env.CUCUMBER_BROWSER_NAME || mergedProfile.reportBrowser
   process.env.CUCUMBER_REPORT_NAME =
     process.env.CUCUMBER_REPORT_NAME || mergedProfile.reportName
   process.env.CUCUMBER_REPORT_DISPLAY_DURATION = 

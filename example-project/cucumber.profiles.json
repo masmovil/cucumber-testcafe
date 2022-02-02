@@ -8,7 +8,7 @@
     "browser": "chrome",
     "tags": "@only and not @ignore",
     "reportHTML": true,
-    "reportName": "QA Suite project nama",
+    "reportName": "QA Suite project name",
     "displayDuration": true,
     "durationInMS": false,
     "timeout": 30000
@@ -22,7 +22,8 @@
     "browser": "chrome:headless",
     "tags": "not @ignore",
     "reportHTML": true,
-    "reportName": "QA Suite project nama",
+    "reportName": "QA Suite project name",
+    "reportBrowser": "chrome",
     "displayDuration": true,
     "durationInMS": false,
     "parallel": 2,

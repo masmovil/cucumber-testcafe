@@ -36,6 +36,14 @@ function cucumberProfileArgs(profile) {
     process.env.CUCUMBER_BROWSER || mergedProfile.browser
   process.env.CUCUMBER_HTML =
     process.env.CUCUMBER_HTML || mergedProfile.reportHTML
+  process.env.CUCUMBER_BROWSER_NAME =
+    process.env.CUCUMBER_BROWSER_NAME || mergedProfile.reportBrowser
+  process.env.CUCUMBER_REPORT_NAME =
+    process.env.CUCUMBER_REPORT_NAME || mergedProfile.reportName
+  process.env.CUCUMBER_REPORT_DISPLAY_DURATION = 
+    process.env.CUCUMBER_REPORT_DISPLAY_DURATION || mergedProfile.displayDuration
+  process.env.CUCUMBER_REPORT_DURATION_MS =
+    process.env.CUCUMBER_REPORT_DURATION_MS || mergedProfile.durationInMS
   process.env.CUCUMBER_TIMEOUT =
     process.env.CUCUMBER_TIMEOUT || mergedProfile.timeout
   process.env.CUCUMBER_BASEURL =

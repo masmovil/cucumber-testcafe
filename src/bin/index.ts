@@ -95,11 +95,8 @@ program
   .description('Runs all detected gherkin specs')
   .action(function () {
     process.env.CUCUMBER_CWD = process.env.CUCUMBER_CWD || process.cwd()
-
     const profile = require('../lib/profile-loader')
-
     const cucumber = require('cucumber')
-
     const cli = new cucumber.Cli({
       argv: [null, __filename, ...profile],
       cwd: process.env.CUCUMBER_CWD,

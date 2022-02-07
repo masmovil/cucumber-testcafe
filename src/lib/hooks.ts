@@ -3,7 +3,7 @@ import { existsSync, unlinkSync, writeFileSync } from 'fs'
 import { testControllerHolder } from './test-controller-holder'
 import { browser } from './world'
 import { ClientFunction } from 'testcafe'
-
+import { RESOLUTIONS} from '../../../../shared/configs/resolutionsEnum.js'
 // tslint:disable-next-line
 const testCafe = require('testcafe')
 
@@ -27,7 +27,7 @@ function runTest(browser) {
 
   return testCafe('localhost').then(function(tc: any) {
     cafeRunner = tc
-    runner = tc.createRunner()
+    runner = cafeRunner.createRunner()
 
     return runner
       .src(RUNNER_FILE)
@@ -46,11 +46,15 @@ function runTest(browser) {
 
 setDefaultTimeout(TIMEOUT)
 
-BeforeAll(function() {
+BeforeAll(async function() {
   createTestFile()
   runTest(process.env.CUCUMBER_BROWSER || this.parameters.browser)
-
-  return testControllerHolder.get().then(t => t.maximizeWindow())
+  const testController =  await testControllerHolder.get()
+  if (process.env.RESOLUTION != 'undefined'){
+    const {height,width} = JSON.parse(RESOLUTIONS[process.env.RESOLUTION])
+    return testController.resizeWindow(height,width)
+  }
+  return testController.maximizeWindow()  
 })
 
 export function resetBrowser(t) {
@@ -68,7 +72,7 @@ export function resetBrowser(t) {
 After(async function(testCase) {
   const world = this
   if (testCase.result.status === Status.FAILED) {
-    attachScreenshotToReport = world.attachScreenshotToReport
+  attachScreenshotToReport = world.attachScreenshotToReport
     await addErrorToController(browser)
     await ifErrorTakeScreenshot(browser)
   }

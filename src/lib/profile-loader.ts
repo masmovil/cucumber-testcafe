@@ -1,3 +1,4 @@
+
 function flattenDeep(arr1) {
   return arr1.reduce(
     (acc, val) =>
@@ -41,7 +42,7 @@ function cucumberProfileArgs(profile) {
   process.env.CUCUMBER_BASEURL =
     process.env.CUCUMBER_BASEURL || mergedProfile.baseURL
   process.env.CUCUMBER_TAGS = process.env.CUCUMBER_TAGS || mergedProfile.tags
-
+  process.env.RESOLUTION = process.env.RESOLUTION || mergedProfile.resolution
   mergedProfile.reports = process.env.CUCUMBER_REPORTS || mergedProfile.reports
   mergedProfile.browser = process.env.CUCUMBER_BROWSER || mergedProfile.browser
   mergedProfile.reportHTML =

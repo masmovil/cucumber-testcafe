@@ -41,6 +41,7 @@ function cucumberProfileArgs(profile) {
     process.env.CUCUMBER_TIMEOUT || mergedProfile.timeout
   process.env.CUCUMBER_BASEURL =
     process.env.CUCUMBER_BASEURL || mergedProfile.baseURL
+  process.env.CUCUMBER_DXADMIN_URL = process.env.CUCUMBER_DXADMIN_URL || mergedProfile.dxAdminURL  
   process.env.CUCUMBER_TAGS = process.env.CUCUMBER_TAGS || mergedProfile.tags
   process.env.RESOLUTION = process.env.RESOLUTION || mergedProfile.resolution
   mergedProfile.reports = process.env.CUCUMBER_REPORTS || mergedProfile.reports

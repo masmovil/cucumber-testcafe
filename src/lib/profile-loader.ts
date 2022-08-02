@@ -1,4 +1,3 @@
-
 function flattenDeep(arr1) {
   return arr1.reduce(
     (acc, val) =>
@@ -19,14 +18,14 @@ const defaultProfile = {
   baseURL: 'http://localhost:4200',
   timeout: 10000,
   parallel: 1,
-  retry: 0
+  retry: 0,
 }
 
 function cucumberProfileArgs(profile) {
   const mergedProfile = {
     ...defaultProfile,
     ...profile,
-    require: [...defaultProfile.require, ...(profile.require || [])]
+    require: [...defaultProfile.require, ...(profile.require || [])],
   }
 
   process.env.CUCUMBER_PLUGINS =
@@ -35,13 +34,17 @@ function cucumberProfileArgs(profile) {
     process.env.CUCUMBER_REPORTS || mergedProfile.reports
   process.env.CUCUMBER_BROWSER =
     process.env.CUCUMBER_BROWSER || mergedProfile.browser
+  process.env.SUBMNGURL = process.env.SUBMNGURL || mergedProfile.SUBMNGURL
+  process.env.ZENDSKURL = process.env.ZENDSKURL || mergedProfile.ZENDSKURL
+  process.env.SVMXURL = process.env.SVMXURL || mergedProfile.SVMXURL
   process.env.CUCUMBER_HTML =
     process.env.CUCUMBER_HTML || mergedProfile.reportHTML
   process.env.CUCUMBER_TIMEOUT =
     process.env.CUCUMBER_TIMEOUT || mergedProfile.timeout
   process.env.CUCUMBER_BASEURL =
     process.env.CUCUMBER_BASEURL || mergedProfile.baseURL
-  process.env.CUCUMBER_DXADMIN_URL = process.env.CUCUMBER_DXADMIN_URL || mergedProfile.dxAdminURL  
+  process.env.CUCUMBER_DXADMIN_URL =
+    process.env.CUCUMBER_DXADMIN_URL || mergedProfile.dxAdminURL
   process.env.CUCUMBER_TAGS = process.env.CUCUMBER_TAGS || mergedProfile.tags
   process.env.RESOLUTION = process.env.RESOLUTION || mergedProfile.resolution
   mergedProfile.reports = process.env.CUCUMBER_REPORTS || mergedProfile.reports
@@ -57,11 +60,11 @@ function cucumberProfileArgs(profile) {
     ...mergedProfile.paths,
     ...mergedProfile.formatters,
 
-    ...mergedProfile.requireModule.map(requiredModule => [
+    ...mergedProfile.requireModule.map((requiredModule) => [
       '--require-module',
-      requiredModule
+      requiredModule,
     ]),
-    ...mergedProfile.require.map(required => ['--require', required]),
+    ...mergedProfile.require.map((required) => ['--require', required]),
 
     `--tags`,
     `${mergedProfile.tags}`,
@@ -69,7 +72,7 @@ function cucumberProfileArgs(profile) {
     `--parallel`,
     `${mergedProfile.parallel}`,
     `--retry`,
-    `${mergedProfile.retry}`
+    `${mergedProfile.retry}`,
   ]
 
   return flattenDeep(args)

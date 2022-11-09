@@ -77,13 +77,13 @@ program
             }
         }
         if (!response.success) {
-            process.exitCode = 1;
+            process.exit(1);
         }
         return response;
     })
         .catch((e) => {
         console.log(e);
-        process.exitCode = 1;
+        process.exit(1);
     });
 });
 program.parse(process.argv);

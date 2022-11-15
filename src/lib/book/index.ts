@@ -1,23 +1,21 @@
-import BasePO from './base.po'
-
+import BaseWithIdentifier from './baseWithElement.po'
 export class Book {
-  public pages = {} as { [key: string]: BasePO }
-  public base: BasePO
+  public pages = {} as { [key: string]: BaseWithIdentifier }
+  public base: BaseWithIdentifier
 
-  constructor() {
-    this.base = new BasePO()
-    this.pages.base = this.base
+  constructor () {
+    this.base = new BaseWithIdentifier()
+    this.pages.base = this.base 
   }
-
-  addPage(pageName, pageObject) {
-    this.pages[pageName] = pageObject
+  addPage(pageName, identifier,pageObject) {
+    this.pages[pageName] =  new BaseWithIdentifier(pageObject, identifier)
   }
 
   getPage(pageName) {
-    if (this.pages[pageName]) {
-      return this.pages[pageName]
+    if (this.pages[pageName]) {  
+    return this.pages[pageName]
     }
-    return this.pages.base
+    throw new Error(`Page does not exist, please check the book has ${pageName} page`)
   }
 }
 

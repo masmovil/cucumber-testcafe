@@ -34,19 +34,21 @@ function cucumberProfileArgs(profile) {
     process.env.CUCUMBER_REPORTS || mergedProfile.reports
   process.env.CUCUMBER_BROWSER =
     process.env.CUCUMBER_BROWSER || mergedProfile.browser
-  process.env.SUBMNGURL = process.env.SUBMNGURL || mergedProfile.SUBMNGURL
-  process.env.ZENDSKURL = process.env.ZENDSKURL || mergedProfile.ZENDSKURL
-  process.env.SVMXURL = process.env.SVMXURL || mergedProfile.SVMXURL
+  process.env.SUBMNGURL = process.env.SUBMNGURL || mergedProfile.SUBMNG_URL
+  process.env.ZENDSKURL = process.env.ZENDSKURL || mergedProfile.ZENDSK_URL
+  process.env.SVMXURL = process.env.SVMXURL || mergedProfile.SVMX_URL
   process.env.CUCUMBER_HTML =
     process.env.CUCUMBER_HTML || mergedProfile.reportHTML
   process.env.CUCUMBER_TIMEOUT =
     process.env.CUCUMBER_TIMEOUT || mergedProfile.timeout  
-  process.env.CUCUMBER_BASEURL =
+    process.env.PENCIL_URL =
+    process.env.PENCIL_URL || mergedProfile.PENCIL_URL
+    process.env.CUCUMBER_BASEURL =
     process.env.CUCUMBER_BASEURL || mergedProfile.baseURL
     process.env.CUCUMBER_XPERIENCE_BASEURL =
-    process.env.CUCUMBER_XPERIENCE_BASEURL || mergedProfile.XPERIENCE_BASE_URL
-  process.env.CUCUMBER_DXADMIN_URL =
-    process.env.CUCUMBER_DXADMIN_URL || mergedProfile.DXADMIN_BASE_URL
+    process.env.CUCUMBER_XPERIENCE_BASEURL || mergedProfile.XPERIENCE_URL
+  process.env.DXADMIN_URL =
+    process.env.CUCUMBER_DXADMIN_URL || mergedProfile.DXADMIN_URL
   process.env.CUCUMBER_TAGS = process.env.CUCUMBER_TAGS || mergedProfile.tags
   process.env.RESOLUTION = process.env.RESOLUTION || mergedProfile.resolution
   mergedProfile.reports = process.env.CUCUMBER_REPORTS || mergedProfile.reports

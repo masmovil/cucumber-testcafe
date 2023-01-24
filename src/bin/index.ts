@@ -106,7 +106,7 @@ program
     return cli
       .run()
       .then((response) => {
-        if (process.env.CUCUMBER_HTML) {
+        if (process.env.CUCUMBER_HTML !== 'false') {
           try {
             require('../reports/cucumber-multi-html.config')
           } catch (error) {

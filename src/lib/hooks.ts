@@ -54,7 +54,8 @@ BeforeAll(async function() {
     const {height,width} = JSON.parse(RESOLUTIONS[process.env.RESOLUTION])
     return testController.resizeWindow(height,width)
   }
-  return testController.maximizeWindow()  
+  if (process.env.CUCUMBER_BROWSER.includes(':headless')) return testController
+  return testController.maximizeWindow()
 })
 
 export function resetBrowser(t) {

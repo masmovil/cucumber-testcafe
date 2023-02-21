@@ -45,8 +45,8 @@
     "fs-extra": "^9.0.1",
     "allure-cucumberjs": "2.0.0-beta.15",
     "allure-js": "^0.0.1-security",
-    "testcafe-reporter-cucumber-json": "^6.3.0",
-    "testcafe": "^1.20.1",
+    "testcafe-reporter-cucumber-json": "jpatel01-tc/testcafe-reporter-cucumber-json",
+    "testcafe": "^2.3.1",
     "ts-node": "^9.0.0",
     "tslib": "^2.0.1"  
   },

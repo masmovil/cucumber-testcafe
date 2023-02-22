@@ -63,6 +63,7 @@ function cucumberProfileArgs(profile) {
   const args = [
     ...mergedProfile.paths,
     ...mergedProfile.formatters,
+    '--format-options', mergedProfile.formatOptions,
 
     ...mergedProfile.requireModule.map((requiredModule) => [
       '--require-module',

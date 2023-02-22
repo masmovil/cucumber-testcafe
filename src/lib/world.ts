@@ -1,5 +1,5 @@
 import { base64Sync } from 'base64-img'
-import { setWorldConstructor } from 'cucumber'
+import { setWorldConstructor } from '@cucumber/cucumber'
 import { testControllerHolder } from './test-controller-holder'
 
 let { RPWorld } = require('@reportportal/agent-js-cucumber')

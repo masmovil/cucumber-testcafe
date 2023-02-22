@@ -1,6 +1,10 @@
 #!/usr/bin/env node
 
 // tslint:disable:no-console
+
+
+import {loadConfiguration, runCucumber} from '@cucumber/cucumber/api'
+
 const fs = require('fs-extra')
 const chalk = require('chalk')
 const clear = require('clear')
@@ -93,35 +97,29 @@ program
 program
   .command('run')
   .description('Runs all detected gherkin specs')
-  .action(function () {
+  .action(async function () {
     process.env.CUCUMBER_CWD = process.env.CUCUMBER_CWD || process.cwd()
     const profile = require('../lib/profile-loader')
-    const cucumber = require('cucumber')
-    const cli = new cucumber.Cli({
-      argv: [null, __filename, ...profile],
-      cwd: process.env.CUCUMBER_CWD,
-      stdout: process.stdout,
-    })
-
-    return cli
-      .run()
-      .then((response) => {
+    const { runConfiguration } = await loadConfiguration({file:'./cucumber.profiles.js',profiles:['qa-xperience-debug']},{cwd:process.env.CUCUMBER_CWD})
+    const { success } = await runCucumber(runConfiguration)   
+     
         if (process.env.CUCUMBER_HTML !== 'false') {
-          try {
-            require('../reports/cucumber-multi-html.config')
-          } catch (error) {
-            console.warn('Could not generate cucumber html report', error)
-          }
-        }
-        if (!response.success) {
-          process.exit(1)
-        }
-        return response
-      })
-      .catch((e) => {
-        console.log(e)
-        process.exit(1)
-      })
+           try {
+             require('../reports/cucumber-multi-html.config')
+           } catch (error) {
+             console.warn('Could not generate cucumber html report', error)
+           }
+         }
+    //     if (!response.success) {
+    //       process.exit(1)
+    //     }
+    //     return response
+    //   })
+    //   .catch((e) => {
+    //     console.log(e)
+    //     process.exit(1)
+    //   })
   })
 
-program.parse(process.argv)
+  program.parse(process.argv)
+

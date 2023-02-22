@@ -1,4 +1,4 @@
-import { Given } from 'cucumber'
+import { Given } from '@cucumber/cucumber'
 import book from '../book'
 
 const querystring = require('querystring')

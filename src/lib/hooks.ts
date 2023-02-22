@@ -1,4 +1,4 @@
-import { After, BeforeAll, AfterAll, setDefaultTimeout, Status } from 'cucumber'
+import { After, BeforeAll, AfterAll, setDefaultTimeout, Status } from '@cucumber/cucumber'
 import { existsSync, unlinkSync, writeFileSync } from 'fs'
 import { testControllerHolder } from './test-controller-holder'
 import { browser } from './world'
@@ -44,7 +44,7 @@ function runTest(browser) {
   })
 }
 
-setDefaultTimeout(TIMEOUT)
+setDefaultTimeout(60000)
 
 BeforeAll(async function() {
   createTestFile()

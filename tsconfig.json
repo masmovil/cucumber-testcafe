@@ -15,11 +15,12 @@
     "moduleResolution": "node",
     "target": "es6",
     "typeRoots": [
-      "./node_modules/@types"
+      "./node_modules/@types",
+      "./node_modules/@cucumber"
     ],
     "types": [
       "node",
-      "cucumber",
+      "@cucumber/cucumber",
       "testcafe"
     ],
     "lib": [

@@ -32,7 +32,6 @@
   "homepage": "https://github.com/masmovil/cucumber-testcafe#readme",
   "dependencies": {
     "@reportportal/agent-js-cucumber": "^5.0.2",
-
     "base64-img": "^1.0.4",
     "chalk": "^4.1.0",
     "clear": "^0.1.0",
@@ -43,7 +42,8 @@
     "multiple-cucumber-html-reporter": "^1.18.0",
     "figlet": "^1.5.0",
     "fs-extra": "^9.0.1",
-    "allure-cucumberjs": "2.0.0-beta.15",
+    "allure-cucumberjs": "^2.0.0",
+    "allure-js-commons": "2.0.0",
     "allure-js": "^0.0.1-security",
     "testcafe-reporter-cucumber-json": "jpatel01-tc/testcafe-reporter-cucumber-json",
     "testcafe": "^2.3.1",

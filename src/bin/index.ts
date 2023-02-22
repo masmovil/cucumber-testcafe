@@ -11,7 +11,6 @@ const clear = require('clear')
 const figlet = require('figlet')
 const path = require('path')
 const program = require('commander')
-
 const pkg = require('../../package.json')
 
 clear()
@@ -94,13 +93,15 @@ program
     }
   })
 
+
 program
   .command('run')
   .description('Runs all detected gherkin specs')
   .action(async function () {
     process.env.CUCUMBER_CWD = process.env.CUCUMBER_CWD || process.cwd()
     const profile = require('../lib/profile-loader')
-    const { runConfiguration } = await loadConfiguration({file:'./cucumber.profiles.js',profiles:['qa-xperience-debug']},{cwd:process.env.CUCUMBER_CWD})
+    const clientPkgJSON = require( `${process.env.CUCUMBER_CWD}/package.json`)
+    const { runConfiguration } = await loadConfiguration({file:clientPkgJSON.cucumber_profiles,profiles:[process.env.CUCUMBER_PROFILE]},{cwd:process.env.CUCUMBER_CWD})
     const { success } = await runCucumber(runConfiguration)   
      
         if (process.env.CUCUMBER_HTML !== 'false') {
@@ -110,15 +111,11 @@ program
              console.warn('Could not generate cucumber html report', error)
            }
          }
-    //     if (!response.success) {
-    //       process.exit(1)
-    //     }
-    //     return response
-    //   })
-    //   .catch((e) => {
-    //     console.log(e)
-    //     process.exit(1)
-    //   })
+       if (!success) {
+       return success
+        process.exit(1)
+         }
+    
   })
 
   program.parse(process.argv)
